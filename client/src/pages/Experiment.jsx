@@ -7,10 +7,16 @@ import ProgressBar from '../components/ProgressBar.jsx';
 import './Experiment.css';
 
 function readSession() {
+  let candidateIds = [];
+  try {
+    candidateIds = JSON.parse(localStorage.getItem('candidateIds') || '[]');
+  } catch {
+    candidateIds = [];
+  }
   return {
     sessionId: localStorage.getItem('sessionId'),
     condition: localStorage.getItem('condition'),
-    candidateIds: JSON.parse(localStorage.getItem('candidateIds') || '[]'),
+    candidateIds,
     candidateIndex: parseInt(localStorage.getItem('candidateIndex') || '0', 10),
   };
 }
@@ -69,7 +75,7 @@ export default function Experiment() {
     setCurrentIndex(next);
   }
 
-  async function handleSkip() {
+  function handleSkip() {
     postEvent({
       sessionId, condition,
       candidateId: candidate.id,
@@ -80,7 +86,7 @@ export default function Experiment() {
     nextCandidate();
   }
 
-  async function handleInterest() {
+  function handleInterest() {
     postEvent({
       sessionId, condition,
       candidateId: candidate.id,
