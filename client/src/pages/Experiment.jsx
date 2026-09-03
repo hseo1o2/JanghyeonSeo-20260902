@@ -89,22 +89,24 @@ export default function Experiment() {
   }
 
   async function handleInterest() {
+    const clickedAt = Date.now();
     postEvent({
       sessionId, condition,
       candidateId: candidate.id,
       event: 'candidate_interested',
-      elapsedMs: Date.now() - viewedAt,
-      timestamp: new Date().toISOString(),
+      elapsedMs: clickedAt - viewedAt,
+      timestamp: new Date(clickedAt).toISOString(),
     }).catch(() => {});
 
     if (condition === 'daily_first') {
       try {
         const data = await revealProfile(candidate.id, sessionId);
+        // elapsedMs = network time for reveal fetch, not card dwell time
         postEvent({
           sessionId, condition,
           candidateId: candidate.id,
           event: 'profile_revealed',
-          elapsedMs: Date.now() - viewedAt,
+          elapsedMs: Date.now() - clickedAt,
           timestamp: new Date().toISOString(),
         }).catch(() => {});
         setRevealData(data);
