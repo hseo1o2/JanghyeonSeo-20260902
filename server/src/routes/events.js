@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
       storedCondition,
       candidateId ?? null,
       event,
-      typeof elapsedMs === 'number' ? elapsedMs : 0,
+      Number.isFinite(elapsedMs) ? elapsedMs : 0,
       metadata ? JSON.stringify(metadata) : null,
       timestamp,
     );

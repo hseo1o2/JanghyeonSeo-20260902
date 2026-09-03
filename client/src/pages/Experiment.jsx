@@ -47,7 +47,7 @@ export default function Experiment() {
 
     const id = candidateIds[index];
     try {
-      const data = await getCandidate(id, condition);
+      const data = await getCandidate(id, sessionId);
       setCandidate(data);
       const now = Date.now();
       setViewedAt(now);
@@ -101,7 +101,7 @@ export default function Experiment() {
     if (condition === 'daily_first') {
       try {
         const data = await revealProfile(candidate.id, sessionId);
-        // elapsedMs = network time for reveal fetch, not card dwell time
+        // elapsedMs = time from interest click to reveal data ready (network latency)
         postEvent({
           sessionId, condition,
           candidateId: candidate.id,

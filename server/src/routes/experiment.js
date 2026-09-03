@@ -1,14 +1,7 @@
 import { Router } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import path from 'path';
 import db from '../db.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const candidates = JSON.parse(
-  readFileSync(path.join(__dirname, '../data/candidates.json'), 'utf-8')
-);
+import candidates from '../data/candidates.js';
 
 const ALL_CANDIDATE_IDS = candidates.map(c => c.id);
 
