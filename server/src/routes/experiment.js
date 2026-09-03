@@ -10,7 +10,20 @@ const candidates = JSON.parse(
   readFileSync(path.join(__dirname, '../data/candidates.json'), 'utf-8')
 );
 
-const CANDIDATE_IDS = candidates.map(c => c.id);
+const ALL_CANDIDATE_IDS = candidates.map(c => c.id);
+
+// Deterministic shuffle keyed by sessionId — same session always sees same order,
+// different sessions see different orders to control for presentation-position confound.
+function seededShuffle(arr, seed) {
+  const a = [...arr];
+  let s = parseInt(seed.replace(/-/g, '').slice(0, 8), 16);
+  for (let i = a.length - 1; i > 0; i--) {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    const j = s % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 const router = Router();
 
@@ -27,7 +40,7 @@ router.get('/start', (req, res) => {
     res.json({
       sessionId,
       condition,
-      candidateIds: CANDIDATE_IDS,
+      candidateIds: seededShuffle(ALL_CANDIDATE_IDS, sessionId),
     });
   } catch (err) {
     console.error(err);

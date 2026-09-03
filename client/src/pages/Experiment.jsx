@@ -6,7 +6,7 @@ import DailyLifeCard from '../components/DailyLifeCard.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import './Experiment.css';
 
-function getSession() {
+function readSession() {
   return {
     sessionId: localStorage.getItem('sessionId'),
     condition: localStorage.getItem('condition'),
@@ -17,12 +17,17 @@ function getSession() {
 
 export default function Experiment() {
   const navigate = useNavigate();
+
+  // Parse localStorage once — avoids new array reference on every render
+  const [session] = useState(readSession);
+
   const [candidate, setCandidate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [viewedAt, setViewedAt] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(session.candidateIndex);
 
-  const { sessionId, condition, candidateIds, candidateIndex } = getSession();
+  const { sessionId, condition, candidateIds } = session;
 
   const loadCandidate = useCallback(async (index) => {
     if (index >= candidateIds.length) {
@@ -31,20 +36,22 @@ export default function Experiment() {
     }
     setLoading(true);
     setError(null);
+
+    const id = candidateIds[index];
     try {
-      const id = candidateIds[index];
       const data = await getCandidate(id, condition);
       setCandidate(data);
       const now = Date.now();
       setViewedAt(now);
-      await postEvent({
+      // Fire-and-forget: logging failure must not block card display
+      postEvent({
         sessionId, condition,
         candidateId: id,
         event: 'candidate_viewed',
         elapsedMs: 0,
         timestamp: new Date(now).toISOString(),
-      });
-    } catch (err) {
+      }).catch(() => {});
+    } catch {
       setError('후보를 불러오지 못했어요.');
     } finally {
       setLoading(false);
@@ -53,17 +60,17 @@ export default function Experiment() {
 
   useEffect(() => {
     if (!sessionId) { navigate('/'); return; }
-    loadCandidate(candidateIndex);
-  }, []);
+    loadCandidate(currentIndex);
+  }, [loadCandidate, currentIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function nextCandidate() {
-    const next = candidateIndex + 1;
+    const next = currentIndex + 1;
     localStorage.setItem('candidateIndex', String(next));
-    loadCandidate(next);
+    setCurrentIndex(next);
   }
 
   async function handleSkip() {
-    await postEvent({
+    postEvent({
       sessionId, condition,
       candidateId: candidate.id,
       event: 'candidate_skipped',
@@ -74,15 +81,14 @@ export default function Experiment() {
   }
 
   async function handleInterest() {
-    await postEvent({
+    postEvent({
       sessionId, condition,
       candidateId: candidate.id,
       event: 'candidate_interested',
       elapsedMs: Date.now() - viewedAt,
       timestamp: new Date().toISOString(),
     }).catch(() => {});
-    // Profile reveal is handled in feat/profile-reveal
-    // For now, move to next candidate
+    // Profile reveal handled in feat/profile-reveal
     nextCandidate();
   }
 
@@ -90,7 +96,7 @@ export default function Experiment() {
 
   return (
     <main className="experiment">
-      <ProgressBar current={candidateIndex + 1} total={candidateIds.length} />
+      <ProgressBar current={currentIndex + 1} total={candidateIds.length} />
 
       {loading && (
         <div className="experiment-state">
@@ -101,7 +107,7 @@ export default function Experiment() {
       {error && (
         <div className="experiment-state">
           <p className="error-text">{error}</p>
-          <button className="btn-primary" onClick={() => loadCandidate(candidateIndex)}>
+          <button className="btn-primary" onClick={() => loadCandidate(currentIndex)}>
             다시 시도
           </button>
         </div>

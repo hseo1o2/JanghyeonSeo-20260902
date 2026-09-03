@@ -1,6 +1,5 @@
 import './CandidateCard.css';
-
-const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+import { BASE_URL as BASE } from '../api/client.js';
 
 export default function DailyLifeCard({ candidate, onSkip, onInterest }) {
   const { dailyMoments } = candidate;
