@@ -1,7 +1,8 @@
 import './ProfileReveal.css';
 import { BASE_URL as BASE } from '../api/client.js';
+import ConversationStarter from './ConversationStarter.jsx';
 
-export default function ProfileReveal({ reveal, onContinue }) {
+export default function ProfileReveal({ reveal, sessionId, condition, onContinue }) {
   const { profile, highlightMoments } = reveal;
 
   return (
@@ -45,6 +46,12 @@ export default function ProfileReveal({ reveal, onContinue }) {
               ))}
             </div>
           )}
+
+          <ConversationStarter
+            candidateId={reveal.id}
+            sessionId={sessionId}
+            condition={condition}
+          />
         </div>
 
         <footer className="reveal-footer">
