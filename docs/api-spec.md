@@ -36,10 +36,10 @@ Notes:
 ---
 
 ## GET /api/candidates/:id
-Returns candidate data shaped for the given condition.
+Returns candidate data shaped for the session's condition.
 
 **Query params:**
-- `condition` — `profile_first` | `daily_first`
+- `sessionId` (required) — session UUID; server derives condition from DB
 
 **Response (profile_first)**
 ```json
@@ -79,6 +79,9 @@ Notes:
 
 ## GET /api/candidates/:id/reveal
 Returns minimal profile after user clicks "더 알아보고 싶어요" in daily_first condition.
+
+**Query params:**
+- `sessionId` (required) — must belong to `daily_first` session; returns 403 otherwise
 
 **Response**
 ```json
@@ -139,7 +142,7 @@ Server fetches candidate data internally (never trust client-sent candidate data
 **Response**
 ```json
 {
-  "questions": [
+  "starters": [
     "퇴근 후 러닝을 자주 하시는 것 같은데, 언제부터 시작했어요?",
     "보드게임 사진이 있던데 요즘 제일 좋아하는 게임이 뭐예요?",
     "혼자 점심 드시는 날이 많은 것 같은데 혼밥 맛집도 잘 찾으세요?"
@@ -147,17 +150,10 @@ Server fetches candidate data internally (never trust client-sent candidate data
 }
 ```
 
-Error fallback (if OpenAI fails):
-```json
-{
-  "questions": [
-    "평소에 어떤 걸 할 때 가장 즐거우세요?",
-    "요즘 빠져있는 게 있으면 뭔지 궁금해요.",
-    "주말에는 주로 어떻게 보내세요?"
-  ],
-  "fallback": true
-}
-```
+**Errors**
+- `429` — rate limit: same session must wait 60 s between requests
+- `502` — OpenAI call failed
+- `503` — `OPENAI_API_KEY` not configured
 
 ---
 

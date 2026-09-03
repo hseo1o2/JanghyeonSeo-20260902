@@ -1,14 +1,9 @@
 import { Router } from 'express';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import path from 'path';
 import db from '../db.js';
+import candidates from '../data/candidates.js';
 import { generateConversationStarters } from '../services/openai.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const candidates = JSON.parse(
-  readFileSync(path.join(__dirname, '../data/candidates.json'), 'utf-8')
-);
+const rateLimitMap = new Map(); // sessionId → last request timestamp
 
 const router = Router();
 
@@ -18,6 +13,13 @@ router.post('/', async (req, res) => {
   if (!candidateId || !sessionId) {
     return res.status(400).json({ error: 'candidateId and sessionId are required' });
   }
+
+  const now = Date.now();
+  const last = rateLimitMap.get(sessionId) ?? 0;
+  if (now - last < 60_000) {
+    return res.status(429).json({ error: 'Please wait before requesting again' });
+  }
+  rateLimitMap.set(sessionId, now);
 
   const session = db.prepare('SELECT condition FROM sessions WHERE id = ?').get(sessionId);
   if (!session) {

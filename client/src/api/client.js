@@ -1,8 +1,7 @@
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
-const BASE = BASE_URL;
 
 async function request(path, options = {}) {
-  const res = await fetch(`${BASE}${path}`, {
+  const res = await fetch(`${BASE_URL}${path}`, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
@@ -15,8 +14,8 @@ async function request(path, options = {}) {
 
 export const startExperiment = () => request('/api/experiment/start');
 
-export const getCandidate = (id, condition) =>
-  request(`/api/candidates/${id}?condition=${condition}`);
+export const getCandidate = (id, sessionId) =>
+  request(`/api/candidates/${id}?sessionId=${sessionId}`);
 
 export const revealProfile = (id, sessionId) =>
   request(`/api/candidates/${id}/reveal?sessionId=${sessionId}`);
