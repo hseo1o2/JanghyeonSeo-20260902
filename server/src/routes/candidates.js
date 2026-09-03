@@ -14,7 +14,10 @@ router.get('/:id', (req, res) => {
   const candidate = candidates.find(c => c.id === req.params.id);
   if (!candidate) return res.status(404).json({ error: 'Candidate not found' });
 
-  const condition = req.query.condition;
+  const { condition } = req.query;
+  if (condition !== 'profile_first' && condition !== 'daily_first') {
+    return res.status(400).json({ error: 'condition must be profile_first or daily_first' });
+  }
 
   if (condition === 'daily_first') {
     return res.json({
@@ -24,7 +27,6 @@ router.get('/:id', (req, res) => {
     });
   }
 
-  // profile_first or no condition: return full profile
   return res.json({
     id: candidate.id,
     condition: 'profile_first',

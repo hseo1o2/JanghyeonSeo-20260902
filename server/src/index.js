@@ -14,7 +14,11 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || '*' }));
+const corsOrigin = process.env.CLIENT_ORIGIN || '*';
+if (!process.env.CLIENT_ORIGIN) {
+  console.warn('[CORS] CLIENT_ORIGIN not set — defaulting to wildcard. Set it in production.');
+}
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
