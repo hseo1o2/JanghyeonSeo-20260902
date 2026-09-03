@@ -8,6 +8,7 @@ import './db.js'; // initializes tables on startup
 import healthRouter from './routes/health.js';
 import candidatesRouter from './routes/candidates.js';
 import experimentRouter from './routes/experiment.js';
+import eventsRouter from './routes/events.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 4000;
@@ -25,6 +26,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/api/health', healthRouter);
 app.use('/api/experiment', experimentRouter);
 app.use('/api/candidates', candidatesRouter);
+app.use('/api/events', eventsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
