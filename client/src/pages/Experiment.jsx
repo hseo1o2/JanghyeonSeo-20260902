@@ -99,11 +99,11 @@ export default function Experiment() {
 
     if (condition === 'daily_first') {
       try {
-        const data = await revealProfile(candidate.id);
+        const data = await revealProfile(candidate.id, sessionId);
         postEvent({
           sessionId, condition,
           candidateId: candidate.id,
-          event: 'candidate_profile_revealed',
+          event: 'profile_revealed',
           elapsedMs: Date.now() - viewedAt,
           timestamp: new Date().toISOString(),
         }).catch(() => {});
