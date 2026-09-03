@@ -128,7 +128,12 @@ export default function Experiment() {
   return (
     <main className="experiment">
       {revealData && (
-        <ProfileReveal reveal={revealData} onContinue={handleRevealContinue} />
+        <ProfileReveal
+          reveal={revealData}
+          sessionId={sessionId}
+          condition={condition}
+          onContinue={handleRevealContinue}
+        />
       )}
       <ProgressBar current={currentIndex + 1} total={candidateIds.length} />
 
