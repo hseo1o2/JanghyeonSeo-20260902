@@ -1,0 +1,144 @@
+.reveal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  animation: reveal-fade-in 0.2s ease;
+}
+
+@keyframes reveal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.reveal-sheet {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  animation: reveal-slide-up 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes reveal-slide-up {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.reveal-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  margin: 12px auto 0;
+  flex-shrink: 0;
+}
+
+.reveal-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  padding: 14px 20px 10px;
+  flex-shrink: 0;
+}
+
+.reveal-image-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--color-border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.reveal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reveal-body {
+  padding: 20px 20px 0;
+}
+
+.reveal-identity {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.reveal-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.reveal-age {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+.reveal-occupation {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.reveal-hobbies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.reveal-bio {
+  font-size: 14px;
+  color: var(--color-text-primary);
+  line-height: 1.65;
+  word-break: keep-all;
+  margin-bottom: 20px;
+}
+
+.reveal-moments {
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+  margin-bottom: 4px;
+}
+
+.reveal-moments-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.reveal-moment {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.reveal-moment:last-child {
+  border-bottom: none;
+}
+
+.reveal-footer {
+  padding: 16px 20px 32px;
+  flex-shrink: 0;
+}
+
+.reveal-footer .btn-primary {
+  width: 100%;
+}

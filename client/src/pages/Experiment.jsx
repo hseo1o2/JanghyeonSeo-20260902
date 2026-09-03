@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCandidate, postEvent } from '../api/client.js';
+import { getCandidate, postEvent, revealProfile } from '../api/client.js';
 import ProfileCard from '../components/ProfileCard.jsx';
 import DailyLifeCard from '../components/DailyLifeCard.jsx';
+import ProfileReveal from '../components/ProfileReveal.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import './Experiment.css';
 
@@ -32,6 +33,7 @@ export default function Experiment() {
   const [error, setError] = useState(null);
   const [viewedAt, setViewedAt] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(session.candidateIndex);
+  const [revealData, setRevealData] = useState(null);
 
   const { sessionId, condition, candidateIds } = session;
 
@@ -86,7 +88,7 @@ export default function Experiment() {
     nextCandidate();
   }
 
-  function handleInterest() {
+  async function handleInterest() {
     postEvent({
       sessionId, condition,
       candidateId: candidate.id,
@@ -94,7 +96,28 @@ export default function Experiment() {
       elapsedMs: Date.now() - viewedAt,
       timestamp: new Date().toISOString(),
     }).catch(() => {});
-    // Profile reveal handled in feat/profile-reveal
+
+    if (condition === 'daily_first') {
+      try {
+        const data = await revealProfile(candidate.id, sessionId);
+        postEvent({
+          sessionId, condition,
+          candidateId: candidate.id,
+          event: 'profile_revealed',
+          elapsedMs: Date.now() - viewedAt,
+          timestamp: new Date().toISOString(),
+        }).catch(() => {});
+        setRevealData(data);
+      } catch {
+        nextCandidate();
+      }
+    } else {
+      nextCandidate();
+    }
+  }
+
+  function handleRevealContinue() {
+    setRevealData(null);
     nextCandidate();
   }
 
@@ -102,6 +125,9 @@ export default function Experiment() {
 
   return (
     <main className="experiment">
+      {revealData && (
+        <ProfileReveal reveal={revealData} onContinue={handleRevealContinue} />
+      )}
       <ProgressBar current={currentIndex + 1} total={candidateIds.length} />
 
       {loading && (

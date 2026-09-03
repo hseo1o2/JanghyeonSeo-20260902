@@ -18,8 +18,8 @@ export const startExperiment = () => request('/api/experiment/start');
 export const getCandidate = (id, condition) =>
   request(`/api/candidates/${id}?condition=${condition}`);
 
-export const revealProfile = (id) =>
-  request(`/api/candidates/${id}/reveal`);
+export const revealProfile = (id, sessionId) =>
+  request(`/api/candidates/${id}/reveal?sessionId=${sessionId}`);
 
 export const postEvent = (payload) =>
   request('/api/events', { method: 'POST', body: JSON.stringify(payload) });

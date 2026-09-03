@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import db from '../db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const candidates = JSON.parse(
@@ -37,6 +38,14 @@ router.get('/:id', (req, res) => {
 router.get('/:id/reveal', (req, res) => {
   const candidate = candidates.find(c => c.id === req.params.id);
   if (!candidate) return res.status(404).json({ error: 'Candidate not found' });
+
+  const { sessionId } = req.query;
+  if (sessionId) {
+    const session = db.prepare('SELECT condition FROM sessions WHERE id = ?').get(sessionId);
+    if (!session || session.condition !== 'daily_first') {
+      return res.status(403).json({ error: 'Reveal is only available in daily_first condition' });
+    }
+  }
 
   // reveal the last 2 moments as highlight context for B condition
   const highlightMoments = candidate.dailyMoments.slice(-2).map(m => ({
