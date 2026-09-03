@@ -6,24 +6,27 @@ const VALID_EVENTS = new Set([
   'candidate_skipped',
   'candidate_interested',
   'profile_revealed',
+  'conversation_intent_clicked',
 ]);
-
-const VALID_CONDITIONS = new Set(['profile_first', 'daily_first']);
 
 const router = Router();
 
 router.post('/', (req, res) => {
   const { sessionId, condition, candidateId, event, elapsedMs, metadata, timestamp } = req.body;
 
-  if (!sessionId || !condition || !event || !timestamp) {
-    return res.status(400).json({ error: 'sessionId, condition, event, timestamp are required' });
-  }
-  if (!VALID_CONDITIONS.has(condition)) {
-    return res.status(400).json({ error: 'Invalid condition' });
+  if (!sessionId || !event || !timestamp) {
+    return res.status(400).json({ error: 'sessionId, event, timestamp are required' });
   }
   if (!VALID_EVENTS.has(event)) {
     return res.status(400).json({ error: `Invalid event. Must be one of: ${[...VALID_EVENTS].join(', ')}` });
   }
+
+  // Verify session exists and derive condition from DB — never trust client-supplied condition
+  const session = db.prepare('SELECT condition FROM sessions WHERE id = ?').get(sessionId);
+  if (!session) {
+    return res.status(400).json({ error: 'Unknown sessionId' });
+  }
+  const storedCondition = session.condition;
 
   try {
     db.prepare(`
@@ -31,7 +34,7 @@ router.post('/', (req, res) => {
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `).run(
       sessionId,
-      condition,
+      storedCondition,
       candidateId ?? null,
       event,
       typeof elapsedMs === 'number' ? elapsedMs : 0,

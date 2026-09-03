@@ -40,11 +40,12 @@ router.get('/:id/reveal', (req, res) => {
   if (!candidate) return res.status(404).json({ error: 'Candidate not found' });
 
   const { sessionId } = req.query;
-  if (sessionId) {
-    const session = db.prepare('SELECT condition FROM sessions WHERE id = ?').get(sessionId);
-    if (!session || session.condition !== 'daily_first') {
-      return res.status(403).json({ error: 'Reveal is only available in daily_first condition' });
-    }
+  if (!sessionId) {
+    return res.status(400).json({ error: 'sessionId is required' });
+  }
+  const session = db.prepare('SELECT condition FROM sessions WHERE id = ?').get(sessionId);
+  if (!session || session.condition !== 'daily_first') {
+    return res.status(403).json({ error: 'Reveal is only available in daily_first condition' });
   }
 
   // reveal the last 2 moments as highlight context for B condition

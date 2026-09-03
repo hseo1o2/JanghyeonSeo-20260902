@@ -2,6 +2,9 @@
   "name": "daily-first-server",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "dev": "nodemon --experimental-sqlite src/index.js",
     "start": "node --experimental-sqlite src/index.js"
