@@ -20,7 +20,11 @@ export default function ConversationStarter({ candidateId, sessionId, condition 
     setError(null);
     try {
       const { starters: items } = await getConversationStarters(candidateId, sessionId);
-      setStarters(items);
+      if (items.length === 0) {
+        setError('대화 주제를 생성하지 못했어요. 잠시 후 다시 시도해주세요.');
+      } else {
+        setStarters(items);
+      }
     } catch {
       setError('대화 주제를 불러오지 못했어요. 잠시 후 다시 시도해주세요.');
     } finally {
