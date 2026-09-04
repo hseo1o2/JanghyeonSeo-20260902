@@ -3,7 +3,7 @@ services:
     name: daily-first-server
     env: node
     plan: free
-    region: singapore
+    region: oregon
     rootDir: server
     buildCommand: npm install
     startCommand: npm start
