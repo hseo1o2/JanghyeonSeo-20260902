@@ -196,5 +196,137 @@
         "imageUrl": "https://picsum.photos/seed/cand06m4/600/400"
       }
     ]
+  },
+  {
+    "id": "candidate_07",
+    "profile": {
+      "name": "재원",
+      "age": 28,
+      "occupation": "초등학교 교사",
+      "hobbies": ["클라이밍", "뮤지컬 관람", "빵 굽기"],
+      "bio": "애들이랑 하루 종일 있으면 지칠 것 같지만 오히려 에너지를 받아요. 주말엔 완전 다른 사람이 됩니다.",
+      "imageUrl": "https://picsum.photos/seed/cand07p/400/500"
+    },
+    "dailyMoments": [
+      {
+        "time": "07:00",
+        "caption": "7시에 학교 도착. 이른 거 알지만 혼자 교실 있는 시간이 좋음",
+        "imageUrl": "https://picsum.photos/seed/cand07m1/600/400"
+      },
+      {
+        "time": "12:30",
+        "caption": "급식실 당번. 애들이 맛없다 해도 제가 먹어보면 진짜 맛있음",
+        "imageUrl": "https://picsum.photos/seed/cand07m2/600/400"
+      },
+      {
+        "time": "18:00",
+        "caption": "퇴근 후 클라이밍 짐. 문제 하나 풀면 성취감이 애들 칭찬 받는 것 같음",
+        "imageUrl": "https://picsum.photos/seed/cand07m3/600/400"
+      },
+      {
+        "time": "21:45",
+        "caption": "주말 빵 재료 미리 주문함. 크림치즈 베이글 해볼 예정",
+        "imageUrl": "https://picsum.photos/seed/cand07m4/600/400"
+      }
+    ]
+  },
+  {
+    "id": "candidate_08",
+    "profile": {
+      "name": "나연",
+      "age": 22,
+      "occupation": "패션 MD (인턴)",
+      "hobbies": ["전시 관람", "빈티지 쇼핑", "홈 카페"],
+      "bio": "유행보다 나만의 취향이 생기는 중이에요. 아직 모르는 게 많은데 그게 오히려 설레요.",
+      "imageUrl": "https://picsum.photos/seed/cand08p/400/500"
+    },
+    "dailyMoments": [
+      {
+        "time": "09:15",
+        "caption": "인턴 첫 달. 아직 출퇴근 시간이 낯선데 적응되면 좋아질 것 같음",
+        "imageUrl": "https://picsum.photos/seed/cand08m1/600/400"
+      },
+      {
+        "time": "13:00",
+        "caption": "선배들이랑 떡볶이. 회사 근처에 이런 데가 있을 줄 몰랐음",
+        "imageUrl": "https://picsum.photos/seed/cand08m2/600/400"
+      },
+      {
+        "time": "17:30",
+        "caption": "퇴근하고 DDP 전시. 혼자 와도 두 시간이 금방 감",
+        "imageUrl": "https://picsum.photos/seed/cand08m3/600/400"
+      },
+      {
+        "time": "22:00",
+        "caption": "집에서 홈카페 연습. 오늘은 라떼아트 하트 성공함",
+        "imageUrl": "https://picsum.photos/seed/cand08m4/600/400"
+      }
+    ]
+  },
+  {
+    "id": "candidate_09",
+    "profile": {
+      "name": "성민",
+      "age": 30,
+      "occupation": "스타트업 공동창업자",
+      "hobbies": ["자전거 라이딩", "요리 유튜브 시청", "독서"],
+      "bio": "창업하면 워라밸이 없다던데 저는 퇴근 후에 의도적으로 완전히 끊어요. 안 그러면 번아웃이 와서요.",
+      "imageUrl": "https://picsum.photos/seed/cand09p/400/500"
+    },
+    "dailyMoments": [
+      {
+        "time": "08:30",
+        "caption": "팀원 없는 아침 두 시간이 집중력 제일 좋음. 중요한 결정은 이때 함",
+        "imageUrl": "https://picsum.photos/seed/cand09m1/600/400"
+      },
+      {
+        "time": "12:45",
+        "caption": "혼자 걸어서 10분 거리 돈까스. 이 루틴 1년째인데 안 질림",
+        "imageUrl": "https://picsum.photos/seed/cand09m2/600/400"
+      },
+      {
+        "time": "19:00",
+        "caption": "퇴근하자마자 자전거 꺼냄. 한 시간 타면 업무 생각이 진짜로 사라짐",
+        "imageUrl": "https://picsum.photos/seed/cand09m3/600/400"
+      },
+      {
+        "time": "22:30",
+        "caption": "요리 유튜브 보면서 침대에 누움. 실제로 하진 않고 보기만 함",
+        "imageUrl": "https://picsum.photos/seed/cand09m4/600/400"
+      }
+    ]
+  },
+  {
+    "id": "candidate_10",
+    "profile": {
+      "name": "유진",
+      "age": 26,
+      "occupation": "간호사 (응급실)",
+      "hobbies": ["드라이브", "뜨개질", "공포영화"],
+      "bio": "3교대라 생활이 불규칙한데 그래서 쉬는 날에 뭘 할지 계획하는 게 더 즐거워요.",
+      "imageUrl": "https://picsum.photos/seed/cand10p/400/500"
+    },
+    "dailyMoments": [
+      {
+        "time": "06:50",
+        "caption": "야간 끝나고 퇴근. 이 시간 동네가 너무 조용하고 좋음",
+        "imageUrl": "https://picsum.photos/seed/cand10m1/600/400"
+      },
+      {
+        "time": "14:00",
+        "caption": "낮잠 자고 일어나서 늦은 점심. 오늘은 소고기 미역국 직접 끓임",
+        "imageUrl": "https://picsum.photos/seed/cand10m2/600/400"
+      },
+      {
+        "time": "17:30",
+        "caption": "쉬는 날 드라이브. 목적지 없이 그냥 달리는 게 제일 좋음",
+        "imageUrl": "https://picsum.photos/seed/cand10m3/600/400"
+      },
+      {
+        "time": "21:00",
+        "caption": "뜨개질하면서 공포영화. 손 바쁘면 덜 무서운 거 진짜임",
+        "imageUrl": "https://picsum.photos/seed/cand10m4/600/400"
+      }
+    ]
   }
 ]
