@@ -11,8 +11,8 @@ const VALID_EVENTS = new Set([
 
 const router = Router();
 
-router.post('/', (req, res) => {
-  const { sessionId, condition, candidateId, event, elapsedMs, metadata, timestamp } = req.body;
+router.post('/', async (req, res) => {
+  const { sessionId, candidateId, event, elapsedMs, metadata, timestamp } = req.body;
 
   if (!sessionId || !event || !timestamp) {
     return res.status(400).json({ error: 'sessionId, event, timestamp are required' });
@@ -21,32 +21,29 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: `Invalid event. Must be one of: ${[...VALID_EVENTS].join(', ')}` });
   }
 
-  // Verify session exists and derive condition from DB — never trust client-supplied condition
-  const session = db.prepare('SELECT condition FROM sessions WHERE id = ?').get(sessionId);
-  if (!session) {
-    return res.status(400).json({ error: 'Unknown sessionId' });
+  const { data: session, error: sessionError } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (sessionError) {
+    console.error('[events] session lookup failed:', sessionError.message);
+    return res.status(500).json({ error: 'Database error' });
   }
-  const storedCondition = session.condition;
+  if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
 
-  try {
-    db.prepare(`
-      INSERT INTO events (session_id, condition, candidate_id, event, elapsed_ms, metadata, timestamp)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      sessionId,
-      storedCondition,
-      candidateId ?? null,
-      event,
-      Number.isFinite(elapsedMs) ? elapsedMs : 0,
-      metadata ? JSON.stringify(metadata) : null,
-      timestamp,
-    );
+  const { error } = await db.from('events').insert({
+    session_id: sessionId,
+    condition: session.condition,
+    candidate_id: candidateId ?? null,
+    event,
+    elapsed_ms: Number.isFinite(elapsedMs) ? elapsedMs : 0,
+    metadata: metadata ?? null,
+    timestamp,
+  });
 
-    res.status(201).json({ ok: true });
-  } catch (err) {
-    console.error('[events] insert failed:', err.message);
-    res.status(500).json({ error: 'Failed to record event' });
+  if (error) {
+    console.error('[events] insert failed:', error.message);
+    return res.status(500).json({ error: 'Failed to record event' });
   }
+
+  res.status(201).json({ ok: true });
 });
 
 export default router;

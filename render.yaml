@@ -12,6 +12,10 @@ services:
       - key: NODE_VERSION
         value: 22.5.0
       - key: OPENAI_API_KEY
-        sync: false          # set manually in Render dashboard
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
       - key: CLIENT_ORIGIN
-        sync: false          # set to your Vercel deployment URL
+        sync: false
