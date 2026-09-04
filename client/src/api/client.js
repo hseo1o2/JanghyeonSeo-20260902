@@ -85,10 +85,16 @@ export async function getFullCandidate(id, sessionId) {
 export const postEvent = (payload) =>
   request('/api/events', { method: 'POST', body: JSON.stringify(payload) });
 
-export const getConversationStarters = (candidateId, sessionId) =>
+export const getConversationStarters = (candidateId, sessionId, myMoments) =>
   request('/api/conversation-starters', {
     method: 'POST',
-    body: JSON.stringify({ candidateId, sessionId }),
+    body: JSON.stringify({ candidateId, sessionId, myMoments }),
+  });
+
+export const sendChat = ({ sessionId, candidateId, history, userMessage, kind, myMoments }) =>
+  request('/api/chat', {
+    method: 'POST',
+    body: JSON.stringify({ sessionId, candidateId, history, userMessage, kind, myMoments }),
   });
 
 export const submitSurvey = (payload) =>

@@ -9,6 +9,7 @@ const VALID_EVENTS = new Set([
   'conversation_intent_clicked',
   'log_posted',
   'log_reacted',
+  'chat_sent',
 ]);
 
 const router = Router();

@@ -151,7 +151,36 @@ Server fetches candidate data internally (never trust client-sent candidate data
 ```
 
 **Errors**
-- `429` — rate limit: same session must wait 60 s between requests
+- `429` — rate limit: same session must wait 8 s between requests
+- `502` — OpenAI call failed
+- `503` — `OPENAI_API_KEY` not configured
+
+---
+
+## POST /api/chat
+After a match, roleplays the candidate from their daily moments. Used by the log room chatbot.
+
+**Request body**
+```json
+{
+  "sessionId": "uuid-v4",
+  "candidateId": "candidate_01",
+  "kind": "chat",
+  "userMessage": "편의점 김밥은 무슨 맛으로 고르세요?",
+  "history": [{ "author": "me", "text": "오늘 점심 뭐 드셨어요?" }],
+  "myMoments": [{ "time": "12:40", "caption": "편의점 김밥으로 때움" }]
+}
+```
+
+`kind` is one of `chat` | `greet` | `moment` | `react` | `overlap`. Candidate profile is loaded on the server; the client cannot override it.
+
+**Response**
+```json
+{ "reply": "김밥은 그냥 참치김밥이요. 줄 서기 싫어서 편의점으로 갔어요." }
+```
+
+**Errors**
+- `429` — same session must wait 1.2 s between chat calls
 - `502` — OpenAI call failed
 - `503` — `OPENAI_API_KEY` not configured
 

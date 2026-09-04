@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ProfileReveal.css';
 import ConversationStarter from './ConversationStarter.jsx';
+import { setPendingChat } from '../lib/pendingChat.js';
 
 export default function ProfileReveal({ reveal, sessionId, condition, onContinue, onOpenLog }) {
   const { profile, highlightMoments } = reveal;
@@ -14,8 +15,6 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
   if (phase === 'match') {
     return (
       <div className="match-overlay" onClick={() => setPhase('detail')}>
-        <p className="match-kicker">It's a match</p>
-        <h2 className="match-title">매칭되었어요</h2>
         <div className="match-photo-wrap">
           <img
             src={profile.imageUrl}
@@ -24,8 +23,11 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
             onError={e => { e.target.style.display = 'none'; }}
           />
         </div>
-        <p className="match-name">{profile.name} · {profile.age}세</p>
-        <p className="match-hint">탭하면 오늘 로그를 같이 열 수 있어요</p>
+        <div className="match-text">
+          <h2 className="match-title">관심이 생겼군요</h2>
+          <p className="match-name">{profile.name} · {profile.age}세</p>
+          <p className="match-hint">오늘 하루를 같이 쌓아볼까요?</p>
+        </div>
       </div>
     );
   }
@@ -76,6 +78,10 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
             candidateId={reveal.id}
             sessionId={sessionId}
             condition={condition}
+            onSelect={text => {
+              setPendingChat(reveal.id, text);
+              onOpenLog();
+            }}
           />
         </div>
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getConversationStarters, postEvent } from '../api/client.js';
 import './ConversationStarter.css';
 
-export default function ConversationStarter({ candidateId, sessionId, condition }) {
+export default function ConversationStarter({ candidateId, sessionId, condition, onSelect }) {
   const [starters, setStarters] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -34,15 +34,15 @@ export default function ConversationStarter({ candidateId, sessionId, condition 
   return (
     <div className="starter-section">
       {!starters && !loading && (
-        <button className="starter-trigger" onClick={handleRequest} disabled={loading}>
-          💬 대화 주제 추천받기
+        <button className="starter-trigger" type="button" onClick={handleRequest} disabled={loading}>
+          대화 주제 추천받기
         </button>
       )}
 
       {loading && (
         <div className="starter-loading">
           <div className="spinner" />
-          <span>AI가 대화 주제를 생각하는 중...</span>
+          <span>오늘 장면으로 첫 말을 고르는 중...</span>
         </div>
       )}
 
@@ -55,8 +55,16 @@ export default function ConversationStarter({ candidateId, sessionId, condition 
       {starters && starters.length > 0 && (
         <div className="starter-list">
           {starters.map((s, i) => (
-            <div key={i} className="starter-item">{s}</div>
+            <button
+              key={i}
+              type="button"
+              className="starter-item"
+              onClick={() => onSelect?.(s)}
+            >
+              {s}
+            </button>
           ))}
+          <p className="starter-hint">고르면 오늘 로그에서 그 말로 대화를 이어가요.</p>
         </div>
       )}
     </div>

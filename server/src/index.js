@@ -11,6 +11,7 @@ import candidatesRouter from './routes/candidates.js';
 import experimentRouter from './routes/experiment.js';
 import eventsRouter from './routes/events.js';
 import startersRouter from './routes/starters.js';
+import chatRouter from './routes/chat.js';
 import surveyRouter from './routes/survey.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,6 +33,7 @@ app.use('/api/experiment', experimentRouter);
 app.use('/api/candidates', candidatesRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/conversation-starters', startersRouter);
+app.use('/api/chat', chatRouter);
 app.use('/api/survey', surveyRouter);
 
 app.listen(PORT, () => {

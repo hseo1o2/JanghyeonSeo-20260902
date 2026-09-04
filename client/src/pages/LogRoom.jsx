@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getFullCandidate, getConversationStarters, postEvent } from '../api/client.js';
+import { getFullCandidate, getConversationStarters, postEvent, sendChat } from '../api/client.js';
 import {
   addMessage,
   addMyMoment,
@@ -9,6 +9,8 @@ import {
   subscribeMatches,
   upsertMatch,
 } from '../lib/matches.js';
+import { takePendingChat } from '../lib/pendingChat.js';
+import TabBar from '../components/TabBar.jsx';
 import './LogRoom.css';
 
 const REACTIONS = ['ㅋㅋ', '오', '궁금', '♥'];
@@ -18,13 +20,6 @@ const MY_PRESETS = [
   { key: 'lunch', caption: '편의점 김밥으로 때움', imageUrl: '/me/moment-2.jpg' },
   { key: 'move', caption: '잠깐 바람 쐬러 나옴', imageUrl: '/me/moment-3.jpg' },
   { key: 'night', caption: '오늘 여기까지. 불 끄기 직전', imageUrl: '/me/moment-4.jpg' },
-];
-
-const THEM_REPLIES = [
-  '이 시간에 올리는 거 보니까 하루 리듬이 비슷한 것 같아요',
-  '방금 장면 보니까 갑자기 배고파졌어요',
-  '말 안 해도 오늘이 보이네요',
-  '이런 거 보다가 말을 걸게 되는 것 같아요',
 ];
 
 function nowTime() {
@@ -46,6 +41,11 @@ export default function LogRoom() {
   const [match, setMatch] = useState(() => getMatch(candidateId));
   const [starters, setStarters] = useState([]);
   const [loading, setLoading] = useState(!match);
+  const [draft, setDraft] = useState('');
+  const [typing, setTyping] = useState(false);
+  const queueRef = useRef([]);
+  const busyRef = useRef(false);
+  const threadRef = useRef(null);
 
   useEffect(() => subscribeMatches(() => setMatch(getMatch(candidateId))), [candidateId]);
 
@@ -88,7 +88,12 @@ export default function LogRoom() {
 
   useEffect(() => {
     if (!sessionId || !candidateId) return;
-    getConversationStarters(candidateId, sessionId)
+    const current = getMatch(candidateId);
+    getConversationStarters(
+      candidateId,
+      sessionId,
+      (current?.myMoments || []).map(m => ({ time: m.time, caption: m.caption })),
+    )
       .then(({ starters: items }) => setStarters(items || []))
       .catch(() => {});
   }, [candidateId, sessionId]);
@@ -96,6 +101,93 @@ export default function LogRoom() {
   const timeline = useMemo(() => mergeTimeline(match), [match]);
   const latestThem = [...(match?.theirMoments || [])].at(-1);
   const latestMe = [...(match?.myMoments || [])].at(-1);
+
+  useEffect(() => {
+    threadRef.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  }, [match?.messages?.length, typing]);
+
+  function enqueueBot(job) {
+    return new Promise(resolve => {
+      queueRef.current.push({ job, resolve });
+      flushQueue();
+    });
+  }
+
+  async function flushQueue() {
+    if (busyRef.current) return;
+    const next = queueRef.current.shift();
+    if (!next) return;
+    busyRef.current = true;
+    setTyping(true);
+    try {
+      const reply = await next.job();
+      next.resolve(reply);
+    } catch {
+      next.resolve(null);
+    } finally {
+      setTyping(false);
+      busyRef.current = false;
+      window.setTimeout(flushQueue, 400);
+    }
+  }
+
+  async function askBot({ kind = 'chat', userMessage }) {
+    const reply = await enqueueBot(async () => {
+      const current = getMatch(candidateId);
+      const { reply: text } = await sendChat({
+        sessionId,
+        candidateId,
+        kind,
+        userMessage,
+        history: (current?.messages || []).map(m => ({ author: m.author, text: m.text })),
+        myMoments: (current?.myMoments || []).map(m => ({ time: m.time, caption: m.caption })),
+      });
+      return text;
+    });
+
+    if (kind === 'overlap') {
+      if (reply) upsertMatch({ id: candidateId, overlap: reply });
+      return reply;
+    }
+
+    if (reply) {
+      addMessage(candidateId, { author: 'them', text: reply });
+      return reply;
+    }
+
+    if (kind === 'chat' || kind === 'greet') {
+      addMessage(candidateId, {
+        author: 'them',
+        text: '잠깐 신호가 안 좋아요. 조금만 있다가 다시 말해 주세요.',
+      });
+    }
+    return null;
+  }
+
+  useEffect(() => {
+    if (loading || !match) return;
+
+    const pending = takePendingChat(candidateId);
+
+    if (!match.greeted) {
+      upsertMatch({ id: candidateId, greeted: true });
+      askBot({ kind: 'greet' }).then(() => {
+        if (pending) sendUserText(pending);
+      });
+      return;
+    }
+
+    if (pending) sendUserText(pending);
+    // greet / pending once per open
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, candidateId, match?.greeted]);
+
+  function maybeOverlap() {
+    const current = getMatch(candidateId);
+    if (current?.overlap) return;
+    if (!(current?.myMoments || []).length || !(current?.theirMoments || []).length) return;
+    askBot({ kind: 'overlap' });
+  }
 
   function postPreset(preset) {
     addMyMoment(candidateId, {
@@ -109,15 +201,14 @@ export default function LogRoom() {
       elapsedMs: 0,
       timestamp: new Date().toISOString(),
     }).catch(() => {});
-    window.setTimeout(() => {
-      addMessage(candidateId, {
-        author: 'them',
-        text: THEM_REPLIES[Math.floor(Math.random() * THEM_REPLIES.length)],
-      });
-    }, 900);
+    askBot({ kind: 'moment', userMessage: `${nowTime()} ${preset.caption}` });
+    maybeOverlap();
   }
 
   function react(entryId, emoji) {
+    const current = getMatch(candidateId);
+    const entry = mergeTimeline(current).find(e => e.id === entryId);
+    const had = (entry?.reactions || []).includes(emoji);
     addReaction(candidateId, entryId, emoji);
     postEvent({
       sessionId, condition, candidateId,
@@ -125,22 +216,24 @@ export default function LogRoom() {
       elapsedMs: 0,
       timestamp: new Date().toISOString(),
     }).catch(() => {});
+    if (!had && emoji === '궁금' && entry?.author === 'them') {
+      askBot({ kind: 'react', userMessage: `${entry.time} ${entry.caption}` });
+    }
   }
 
-  function sendStarter(text) {
-    addMessage(candidateId, { author: 'me', text });
+  function sendUserText(text) {
+    const trimmed = String(text || '').trim();
+    if (!trimmed) return;
+    addMessage(candidateId, { author: 'me', text: trimmed });
+    setDraft('');
+    setStarters(prev => prev.filter(s => s !== trimmed));
     postEvent({
       sessionId, condition, candidateId,
-      event: 'conversation_intent_clicked',
+      event: 'chat_sent',
       elapsedMs: 0,
       timestamp: new Date().toISOString(),
     }).catch(() => {});
-    window.setTimeout(() => {
-      addMessage(candidateId, {
-        author: 'them',
-        text: '그거 보면서 생각났어요. 오늘 하루 끝나고 이어서 이야기해요',
-      });
-    }, 1100);
+    askBot({ kind: 'chat', userMessage: trimmed });
   }
 
   if (loading || !match) {
@@ -167,7 +260,10 @@ export default function LogRoom() {
           {latestMe ? (
             <img src={latestMe.imageUrl} alt="" className="log-split-img" />
           ) : (
-            <div className="log-split-empty">아직 없음</div>
+            <div className="log-split-empty">
+              <span className="log-split-empty-icon">+</span>
+              <span>내 장면 올리기</span>
+            </div>
           )}
         </div>
         <div className="log-split-col">
@@ -180,6 +276,8 @@ export default function LogRoom() {
         </div>
       </section>
       <p className="log-split-caption">셋로그처럼, 말은 나중에. 먼저 오늘의 장면이 나란히 쌓입니다.</p>
+
+      {match.overlap && <p className="log-overlap">{match.overlap}</p>}
 
       <ol className="log-timeline">
         {timeline.map(entry => (
@@ -204,22 +302,26 @@ export default function LogRoom() {
         ))}
       </ol>
 
-      {(match.messages || []).length > 0 && (
-        <section className="log-thread">
-          <p className="log-thread-label">Zip · 지금 하는 말</p>
-          {match.messages.map(msg => (
-            <div key={msg.id} className={`log-bubble log-bubble-${msg.author}`}>
-              {msg.text}
-            </div>
-          ))}
-        </section>
-      )}
+      <section className="log-thread" ref={threadRef}>
+        <p className="log-thread-label">Zip · 지금 하는 말</p>
+        {(match.messages || []).length === 0 && !typing && (
+          <p className="log-thread-empty">{match.name}이 오늘 장면으로 먼저 말 걸어요.</p>
+        )}
+        {(match.messages || []).map(msg => (
+          <div key={msg.id} className={`log-bubble log-bubble-${msg.author}`}>
+            {msg.text}
+          </div>
+        ))}
+        {typing && (
+          <div className="log-bubble log-bubble-them log-typing">{match.name}이 입력 중…</div>
+        )}
+      </section>
 
       {starters.length > 0 && (
         <section className="log-starters">
           <p className="log-thread-label">이 장면으로 말 걸기</p>
           {starters.map(s => (
-            <button key={s} className="log-starter" onClick={() => sendStarter(s)}>{s}</button>
+            <button key={s} className="log-starter" type="button" onClick={() => sendUserText(s)}>{s}</button>
           ))}
         </section>
       )}
@@ -228,17 +330,34 @@ export default function LogRoom() {
         <p className="log-thread-label">지금 올리기</p>
         <div className="log-presets">
           {MY_PRESETS.map(p => (
-            <button key={p.key} className="log-preset" onClick={() => postPreset(p)}>
-              {p.key === 'commute' ? '출근' : p.key === 'lunch' ? '점심' : p.key === 'move' ? '운동' : '밤'}
+            <button key={p.key} className="log-preset" type="button" onClick={() => postPreset(p)}>
+              <img src={p.imageUrl} alt="" className="log-preset-img" />
+              <span className="log-preset-label">
+                {p.key === 'commute' ? '출근길' : p.key === 'lunch' ? '점심' : p.key === 'move' ? '잠깐 밖' : '오늘 끝'}
+              </span>
             </button>
           ))}
         </div>
+        <form
+          className="log-chatbar"
+          onSubmit={e => {
+            e.preventDefault();
+            sendUserText(draft);
+          }}
+        >
+          <input
+            className="log-input"
+            value={draft}
+            maxLength={200}
+            placeholder={`${match.name}에게 말 걸기`}
+            onChange={e => setDraft(e.target.value)}
+          />
+          <button className="log-send" type="submit" disabled={!draft.trim()}>보내기</button>
+        </form>
+        <p className="log-chat-hint">상대는 오늘 장면만 보고 대답해요.</p>
       </section>
 
-      <div className="log-footer-nav">
-        <Link to="/discover" className="log-footer-link">발견으로</Link>
-        <Link to="/matches" className="log-footer-link">다른 로그</Link>
-      </div>
+      <TabBar />
     </main>
   );
 }

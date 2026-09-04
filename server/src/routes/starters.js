@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import db from '../db.js';
 import candidates from '../data/candidates.js';
-import { generateConversationStarters } from '../services/openai.js';
+import { generateConversationStarters, sanitizeMoments } from '../services/openai.js';
 
 const rateLimitMap = new Map(); // sessionId → last request timestamp
 
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 
   const now = Date.now();
   const last = rateLimitMap.get(sessionId) ?? 0;
-  if (now - last < 60_000) {
+  if (now - last < 8_000) {
     return res.status(429).json({ error: 'Please wait before requesting again' });
   }
 
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const starters = await generateConversationStarters(candidate);
+    const starters = await generateConversationStarters(candidate, sanitizeMoments(req.body.myMoments));
     res.json({ starters });
   } catch (err) {
     console.error('[starters] OpenAI error:', err.message);
