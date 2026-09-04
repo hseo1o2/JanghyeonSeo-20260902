@@ -86,6 +86,8 @@ export default function ProfileCard({ candidate, onSkip, onInterest, interestPen
             alt="후보 프로필"
             className="card-hero-image"
             draggable="false"
+            fetchPriority="high"
+            decoding="async"
             onError={e => { e.target.style.display = 'none'; }}
           />
           <div className="card-hero-gradient" />

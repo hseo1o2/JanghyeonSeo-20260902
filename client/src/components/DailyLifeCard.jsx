@@ -94,6 +94,8 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
                   alt={m.caption}
                   className="moment-image"
                   draggable="false"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
                   onError={e => { e.target.style.display = 'none'; }}
                 />
                 <span className="moment-time-badge">{m.time}</span>

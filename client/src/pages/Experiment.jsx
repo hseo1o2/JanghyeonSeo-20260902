@@ -50,7 +50,15 @@ export default function Experiment() {
     const id = candidateIds[index];
     setCardVisible(false);
     try {
-      const data = await getCandidate(id, sessionId);
+      let data = null;
+      if (index === 0) {
+        try {
+          const cached = JSON.parse(localStorage.getItem('firstCandidate') || 'null');
+          if (cached?.id === id) data = cached;
+        } catch { /* ignore */ }
+        localStorage.removeItem('firstCandidate');
+      }
+      if (!data) data = await getCandidate(id, sessionId);
       setCandidate(data);
       const now = Date.now();
       setViewedAt(now);

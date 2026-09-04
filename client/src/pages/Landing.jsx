@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { startExperiment, BASE_URL } from '../api/client.js';
+import { warmupHealth, prefetchStart } from '../api/client.js';
 import { getUser, clearAuth } from '../lib/auth.js';
 import './Landing.css';
 
@@ -12,7 +12,7 @@ export default function Landing() {
   const slowTimer = useRef(null);
   const user = getUser();
 
-  // Resume existing session if in progress
+  // Resume in-progress sessions. Otherwise wake Render and prefetch /start.
   useEffect(() => {
     try {
       const sid   = localStorage.getItem('sessionId');
@@ -20,16 +20,16 @@ export default function Landing() {
       const ids   = JSON.parse(localStorage.getItem('candidateIds') || '[]');
       if (sid && index < ids.length) {
         navigate('/experiment', { replace: true });
+        return;
       }
     } catch {
       // malformed localStorage — ignore
     }
+    const forced = new URLSearchParams(window.location.search).get('condition');
+    warmupHealth().finally(() => {
+      prefetchStart(forced || undefined).catch(() => {});
+    });
   }, [navigate]);
-
-  // Warm-up ping: wake Render before the user clicks
-  useEffect(() => {
-    fetch(`${BASE_URL}/api/health`).catch(() => {});
-  }, []);
 
   async function handleStart() {
     setLoading(true);
@@ -40,11 +40,14 @@ export default function Landing() {
 
     try {
       const forced = new URLSearchParams(window.location.search).get('condition');
-      const { sessionId, condition, candidateIds } = await startExperiment(forced || undefined);
+      const { sessionId, condition, candidateIds, firstCandidate } = await prefetchStart(forced || undefined);
       localStorage.setItem('sessionId', sessionId);
       localStorage.setItem('condition', condition);
       localStorage.setItem('candidateIds', JSON.stringify(candidateIds));
       localStorage.setItem('candidateIndex', '0');
+      if (firstCandidate) {
+        localStorage.setItem('firstCandidate', JSON.stringify(firstCandidate));
+      }
       navigate('/experiment');
     } catch {
       setError('서버 연결에 실패했어요. 잠시 후 다시 시도해주세요.');

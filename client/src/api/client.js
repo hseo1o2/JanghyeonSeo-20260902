@@ -7,6 +7,25 @@ function authHeaders() {
   } catch { return {}; }
 }
 
+export function warmupHealth() {
+  return fetch(`${BASE_URL}/api/health`, { cache: 'no-store' }).catch(() => null);
+}
+
+let inflightStart = null;
+let inflightKey = null;
+
+export function prefetchStart(condition) {
+  const key = condition || '';
+  if (inflightStart && inflightKey === key) return inflightStart;
+  inflightKey = key;
+  inflightStart = startExperiment(condition).catch(err => {
+    inflightStart = null;
+    inflightKey = null;
+    throw err;
+  });
+  return inflightStart;
+}
+
 async function request(path, options = {}) {
   const res = await fetch(`${BASE_URL}${path}`, {
     headers: { 'Content-Type': 'application/json', ...authHeaders() },

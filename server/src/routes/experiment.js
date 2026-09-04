@@ -46,10 +46,19 @@ router.get('/start', async (req, res) => {
     const { error } = await db.from('sessions').insert(row);
     if (error) throw error;
 
+    const candidateIds = seededShuffle(ALL_CANDIDATE_IDS, sessionId);
+    const first = candidates.find(c => c.id === candidateIds[0]);
+    const firstCandidate = first
+      ? (condition === 'daily_first'
+        ? { id: first.id, condition, dailyMoments: first.dailyMoments }
+        : { id: first.id, condition, profile: first.profile })
+      : null;
+
     res.json({
       sessionId,
       condition,
-      candidateIds: seededShuffle(ALL_CANDIDATE_IDS, sessionId),
+      candidateIds,
+      firstCandidate,
       user: user ? { id: user.id, name: user.name } : null,
     });
   } catch (err) {
