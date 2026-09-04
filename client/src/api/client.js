@@ -38,14 +38,37 @@ async function request(path, options = {}) {
   return res.json();
 }
 
+function localAssetFolder(candidateId) {
+  return String(candidateId || '').replace('candidate_', 'candidate-');
+}
+
+function withLocalImages(data) {
+  if (!data?.id) return data;
+  const folder = localAssetFolder(data.id);
+  const next = { ...data };
+  if (next.profile) {
+    next.profile = { ...next.profile, imageUrl: `/candidates/${folder}/profile.jpg` };
+  }
+  if (next.dailyMoments) {
+    next.dailyMoments = next.dailyMoments.map((m, i) => ({
+      ...m,
+      imageUrl: `/candidates/${folder}/moment-${i + 1}.jpg`,
+    }));
+  }
+  return next;
+}
+
 export const startExperiment = (condition) =>
-  request(`/api/experiment/start${condition ? `?condition=${condition}` : ''}`);
+  request(`/api/experiment/start${condition ? `?condition=${condition}` : ''}`).then(res => ({
+    ...res,
+    firstCandidate: res.firstCandidate ? withLocalImages(res.firstCandidate) : res.firstCandidate,
+  }));
 
 export const getCandidate = (id, sessionId) =>
-  request(`/api/candidates/${id}?sessionId=${sessionId}`);
+  request(`/api/candidates/${id}?sessionId=${sessionId}`).then(withLocalImages);
 
 export const revealProfile = (id, sessionId) =>
-  request(`/api/candidates/${id}/reveal?sessionId=${sessionId}`);
+  request(`/api/candidates/${id}/reveal?sessionId=${sessionId}`).then(withLocalImages);
 
 export const postEvent = (payload) =>
   request('/api/events', { method: 'POST', body: JSON.stringify(payload) });
