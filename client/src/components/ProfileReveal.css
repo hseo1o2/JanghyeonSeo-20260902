@@ -135,7 +135,7 @@
 }
 
 .reveal-footer {
-  padding: 16px 20px 32px;
+  padding: 16px 20px calc(32px + env(safe-area-inset-bottom, 0px));
   flex-shrink: 0;
 }
 
