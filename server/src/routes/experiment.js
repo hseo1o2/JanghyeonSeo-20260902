@@ -5,8 +5,6 @@ import candidates from '../data/candidates.js';
 
 const ALL_CANDIDATE_IDS = candidates.map(c => c.id);
 
-// Deterministic shuffle keyed by sessionId — same session always sees same order,
-// different sessions see different orders to control for presentation-position confound.
 function seededShuffle(arr, seed) {
   const a = [...arr];
   let s = parseInt(seed.replace(/-/g, '').slice(0, 8), 16);
@@ -20,15 +18,14 @@ function seededShuffle(arr, seed) {
 
 const router = Router();
 
-router.get('/start', (req, res) => {
+router.get('/start', async (req, res) => {
   try {
     const sessionId = uuidv4();
     const condition = Math.random() < 0.5 ? 'profile_first' : 'daily_first';
     const now = new Date().toISOString();
 
-    db.prepare(
-      'INSERT INTO sessions (id, condition, created_at) VALUES (?, ?, ?)'
-    ).run(sessionId, condition, now);
+    const { error } = await db.from('sessions').insert({ id: sessionId, condition, created_at: now });
+    if (error) throw error;
 
     res.json({
       sessionId,
@@ -36,7 +33,7 @@ router.get('/start', (req, res) => {
       candidateIds: seededShuffle(ALL_CANDIDATE_IDS, sessionId),
     });
   } catch (err) {
-    console.error(err);
+    console.error('[experiment] start failed:', err.message);
     res.status(500).json({ error: 'Failed to start experiment' });
   }
 });

@@ -6,14 +6,16 @@
     "node": ">=22.5.0"
   },
   "scripts": {
-    "dev": "nodemon --experimental-sqlite src/index.js",
-    "start": "node --experimental-sqlite src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.115.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "openai": "^4.52.7",
+    "pg": "^8.23.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
