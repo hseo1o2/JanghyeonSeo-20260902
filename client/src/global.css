@@ -24,17 +24,26 @@
   --font-sans: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
 }
 
-html, body, #root {
+html, body {
   height: 100%;
 }
 
 body {
-  background: var(--color-bg);
+  background: #e8e3dc;
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-bg);
+  position: relative;
+  box-shadow: 0 0 40px rgba(0,0,0,0.12);
 }
 
 button {
