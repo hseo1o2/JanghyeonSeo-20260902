@@ -10,7 +10,11 @@ router.post('/', async (req, res) => {
 
   if (!sessionId) return res.status(400).json({ error: 'sessionId is required' });
 
-  const { data: session } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  const { data: session, error: sessionError } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (sessionError) {
+    console.error('[survey] session lookup failed:', sessionError.message);
+    return res.status(500).json({ error: 'Database error' });
+  }
   if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
 
   if (q1Reason != null && !VALID_Q1.has(q1Reason)) {

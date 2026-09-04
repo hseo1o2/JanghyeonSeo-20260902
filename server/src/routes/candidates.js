@@ -11,7 +11,11 @@ router.get('/:id', async (req, res) => {
   const { sessionId } = req.query;
   if (!sessionId) return res.status(400).json({ error: 'sessionId is required' });
 
-  const { data: session } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  const { data: session, error: sessionError } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (sessionError) {
+    console.error('[candidates] session lookup failed:', sessionError.message);
+    return res.status(500).json({ error: 'Database error' });
+  }
   if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
 
   const condition = session.condition;
@@ -29,8 +33,13 @@ router.get('/:id/reveal', async (req, res) => {
   const { sessionId } = req.query;
   if (!sessionId) return res.status(400).json({ error: 'sessionId is required' });
 
-  const { data: session } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
-  if (!session || session.condition !== 'daily_first') {
+  const { data: session, error: revealSessionError } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (revealSessionError) {
+    console.error('[candidates/reveal] session lookup failed:', revealSessionError.message);
+    return res.status(500).json({ error: 'Database error' });
+  }
+  if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
+  if (session.condition !== 'daily_first') {
     return res.status(403).json({ error: 'Reveal is only available in daily_first condition' });
   }
 

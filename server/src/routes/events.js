@@ -21,7 +21,11 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: `Invalid event. Must be one of: ${[...VALID_EVENTS].join(', ')}` });
   }
 
-  const { data: session } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  const { data: session, error: sessionError } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (sessionError) {
+    console.error('[events] session lookup failed:', sessionError.message);
+    return res.status(500).json({ error: 'Database error' });
+  }
   if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
 
   const { error } = await db.from('events').insert({

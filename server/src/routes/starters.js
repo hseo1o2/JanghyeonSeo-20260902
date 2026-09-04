@@ -20,7 +20,11 @@ router.post('/', async (req, res) => {
     return res.status(429).json({ error: 'Please wait before requesting again' });
   }
 
-  const { data: session } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  const { data: session, error: sessionError } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (sessionError) {
+    console.error('[starters] session lookup failed:', sessionError.message);
+    return res.status(500).json({ error: 'Database error' });
+  }
   if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
 
   rateLimitMap.set(sessionId, now);
