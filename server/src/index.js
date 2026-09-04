@@ -34,4 +34,7 @@ app.use('/api/survey', surveyRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  if (process.env.RENDER) {
+    console.warn('[storage] Running on Render free tier — SQLite is ephemeral. Data resets on redeploy/cold-start.');
+  }
 });
