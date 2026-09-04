@@ -34,6 +34,8 @@ export default function Experiment() {
   const [viewedAt, setViewedAt] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(session.candidateIndex);
   const [revealData, setRevealData] = useState(null);
+  const [interestPending, setInterestPending] = useState(false);
+  const [cardVisible, setCardVisible] = useState(false);
 
   const { sessionId, condition, candidateIds } = session;
 
@@ -46,11 +48,13 @@ export default function Experiment() {
     setError(null);
 
     const id = candidateIds[index];
+    setCardVisible(false);
     try {
       const data = await getCandidate(id, sessionId);
       setCandidate(data);
       const now = Date.now();
       setViewedAt(now);
+      requestAnimationFrame(() => setCardVisible(true));
       // Fire-and-forget: logging failure must not block card display
       postEvent({
         sessionId, condition,
@@ -89,6 +93,8 @@ export default function Experiment() {
   }
 
   async function handleInterest() {
+    if (interestPending) return;
+    setInterestPending(true);
     const clickedAt = Date.now();
     postEvent({
       sessionId, condition,
@@ -116,6 +122,7 @@ export default function Experiment() {
     } else {
       nextCandidate();
     }
+    setInterestPending(false);
   }
 
   function handleRevealContinue() {
@@ -153,11 +160,21 @@ export default function Experiment() {
       )}
 
       {!loading && !error && candidate && (
-        <div className="card-wrap">
+        <div className={`card-wrap ${cardVisible ? 'card-visible' : ''}`}>
           {condition === 'daily_first' ? (
-            <DailyLifeCard candidate={candidate} onSkip={handleSkip} onInterest={handleInterest} />
+            <DailyLifeCard
+              candidate={candidate}
+              onSkip={handleSkip}
+              onInterest={handleInterest}
+              interestPending={interestPending}
+            />
           ) : (
-            <ProfileCard candidate={candidate} onSkip={handleSkip} onInterest={handleInterest} />
+            <ProfileCard
+              candidate={candidate}
+              onSkip={handleSkip}
+              onInterest={handleInterest}
+              interestPending={interestPending}
+            />
           )}
         </div>
       )}

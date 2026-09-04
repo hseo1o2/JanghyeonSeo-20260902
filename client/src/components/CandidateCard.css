@@ -144,7 +144,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  padding: 16px 20px 20px;
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--color-border);
   margin-top: auto;
 }
@@ -181,4 +181,10 @@
 
 .btn-primary:hover {
   background: var(--color-accent-hover);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }

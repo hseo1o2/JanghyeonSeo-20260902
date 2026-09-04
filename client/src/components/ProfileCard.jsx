@@ -1,7 +1,7 @@
 import './CandidateCard.css';
 import { BASE_URL as BASE } from '../api/client.js';
 
-export default function ProfileCard({ candidate, onSkip, onInterest }) {
+export default function ProfileCard({ candidate, onSkip, onInterest, interestPending }) {
   const { profile } = candidate;
 
   return (
@@ -32,8 +32,10 @@ export default function ProfileCard({ candidate, onSkip, onInterest }) {
       </div>
 
       <footer className="card-footer">
-        <button className="btn-secondary" onClick={onSkip}>넘기기</button>
-        <button className="btn-primary" onClick={onInterest}>더 알아보고 싶어요</button>
+        <button className="btn-secondary" onClick={onSkip} disabled={interestPending}>넘기기</button>
+        <button className="btn-primary" onClick={onInterest} disabled={interestPending}>
+          {interestPending ? '…' : '더 알아보고 싶어요'}
+        </button>
       </footer>
     </article>
   );

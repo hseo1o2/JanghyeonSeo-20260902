@@ -59,3 +59,14 @@
   width: 100%;
   max-width: 280px;
 }
+
+.landing-cta:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.landing-error {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #c0392b;
+}
