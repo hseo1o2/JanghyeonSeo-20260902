@@ -91,8 +91,8 @@ export default function Landing() {
           하루를 조금 알아보고 싶다면
         </h1>
         <p className="landing-desc">
-          6명의 후보를 카드로 만나보세요. 스와이프하거나 버튼으로
-          관심 여부를 선택하면, 프로필을 공개해드려요. 약 2~3분 소요됩니다.
+          몇 명의 후보를 보고, 더 알아보고 싶은 사람을 골라 주세요.
+          약 2~3분 소요됩니다.
         </p>
 
         <div className="landing-how">
@@ -103,12 +103,12 @@ export default function Landing() {
           <span className="landing-step-arrow">→</span>
           <div className="landing-step">
             <span className="landing-step-icon">👉</span>
-            <span>스와이프</span>
+            <span>관심 / 넘기기</span>
           </div>
           <span className="landing-step-arrow">→</span>
           <div className="landing-step">
-            <span className="landing-step-icon">✨</span>
-            <span>프로필 공개</span>
+            <span className="landing-step-icon">➡️</span>
+            <span>다음 후보</span>
           </div>
         </div>
 

@@ -5,8 +5,12 @@
  * that inform candidate dailyMoments captions in candidates.json.
  *
  * Sources:
- *   - 한국어 위키백과: encyclopedic base (stable, always accessible)
- *   - 나무위키: user-generated, colloquial Korean (richer daily-life vocabulary)
+ *   - 과제 1에서 인용한 셋로그 공개 기사 (모비인사이드, 한국경제, 코리아데일리 등)
+ *   - 한국어 위키백과 / 나무위키: 일상 어휘를 보강하는 안정 소스
+ *
+ * The crawler does NOT copy sentences into candidates.json.
+ * It ranks which daily-life themes recur (commute, solo meal, exercise, late night).
+ * Candidate captions are rewritten from those themes.
  *
  * Output: crawler/output.json
  *   - themes[]          — keyword frequency per theme (backward compat)
@@ -25,6 +29,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // ─── Sources ────────────────────────────────────────────────────────────────
 
 const SOURCES = [
+  // 과제 1에서 인용한 공개 기사
+  { name: '모비인사이드 — 셋로그 팀 인터뷰', url: 'https://www.mobiinside.co.kr/2026/06/09/setlog-team-interview-social-networking-app-growth/', type: 'article' },
+  { name: '한국경제 — 셋로그 소개팅', url: 'https://www.hankyung.com/article/2026052240597', type: 'article' },
+  { name: '일요신문 — 셋로그 일상 기록', url: 'https://www.ilyo.co.kr/?ac=article_view&entry_id=510607', type: 'article' },
+  { name: 'Daum — 셋로그 이용자 수', url: 'https://v.daum.net/v/20260605115300629', type: 'article' },
+  { name: '파이낸셜뉴스 — 셋로그 일본 확산', url: 'https://www.fnnews.com/news/202608222101443394', type: 'article' },
   // 한국어 위키백과 (standard HTML — #mw-content-text selector)
   { name: '위키백과 — 소개팅', url: 'https://ko.wikipedia.org/wiki/%EC%86%8C%EA%B0%9C%ED%8C%85', type: 'wiki' },
   { name: '위키백과 — 일상생활', url: 'https://ko.wikipedia.org/wiki/%EC%9D%BC%EC%83%81%EC%83%9D%ED%99%9C', type: 'wiki' },
@@ -36,6 +46,7 @@ const SOURCES = [
   { name: '나무위키 — 소개팅', url: 'https://namu.wiki/w/%EC%86%8C%EA%B0%9C%ED%8C%85', type: 'namu' },
   { name: '나무위키 — 헬스장', url: 'https://namu.wiki/w/%ED%97%AC%EC%8A%A4%EC%9E%A5', type: 'namu' },
   { name: '나무위키 — 카페', url: 'https://namu.wiki/w/%EC%B9%B4%ED%8E%98', type: 'namu' },
+  { name: '나무위키 — 셋로그', url: 'https://namu.wiki/w/%EC%85%8B%EB%A1%9C%EA%B7%B8', type: 'namu' },
 ];
 
 // ─── Patterns for moment-sentence scoring ────────────────────────────────────
@@ -47,7 +58,7 @@ const TIME_RE = /(?:오전|오후|새벽|아침|점심|저녁|밤|퇴근\s*후|�
 const PLACE_RE = /(?:카페|편의점|헬스장|지하철|버스|회사|집에서|학교|공원|식당|마트|동네|사무실|독서실|도서관|운동장|헬스클럽)/;
 
 // Specific daily-life action verbs (NOT broad "했다" — avoids encyclopedic matches)
-const ACTION_RE = /(?:먹었|마셨|달렸|운동했|씻었|잤다|읽었|봤다|만났|샀다|걸었|쉬었|일어났|주문했|시켰다|혼밥|혼자\s*먹|커피\s*마|퇴근했|출근했|밥\s*먹|야식|운동\s*갔|헬스\s*갔|카페\s*갔|산책했)/;
+const ACTION_RE = /(?:먹었|마셨|달렸|운동했|씻었|잤다|읽었|봤다|만났|샀다|걸었|쉬었|일어났|주문했|시켰다|혼밥|혼자\s*먹|커피\s*마|퇴근했|출근했|밥\s*먹|야식|운동\s*갔|헬스\s*갔|카페\s*갔|산책했|찍었|공유했|올렸|기록했|촬영)/;
 
 // First-person / recency markers that suggest personal narrative
 const FIRST_PERSON_RE = /(?:나는|저는|나도|저도|오늘|어제|아까|요즘|매일|하루|이날|그날)/;
@@ -88,11 +99,15 @@ const THEME_CLUSTERS = [
 // ─── Fetch helpers ───────────────────────────────────────────────────────────
 
 const HTTP = axios.create({
-  timeout: 10000,
+  timeout: 15000,
   headers: {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124 Safari/537.36',
-    'Accept-Language': 'ko-KR,ko;q=0.9',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8',
+    'Accept-Encoding': 'gzip, deflate',
   },
+  responseType: 'text',
+  decompress: true,
 });
 
 async function fetchSentences(source) {
@@ -110,6 +125,34 @@ async function fetchSentences(source) {
         .split(/[.。!?…\n]/)
         .map(s => s.trim())
         .filter(s => s.length >= 10);
+    }
+
+    if (source.type === 'article') {
+      $('script, style, nav, footer, header, iframe, noscript, aside').remove();
+      const bodySelectors = [
+        '#articletxt',
+        '.article-body',
+        '[itemprop="articleBody"]',
+        '.article_view',
+        '.news_view',
+        '#harmonyContainer',
+        '.view_cont',
+        '.article-content',
+        '.news-cnt',
+        '#article-view-content-div',
+        'article',
+        'main',
+      ];
+      let text = '';
+      for (const sel of bodySelectors) {
+        const chunk = $(sel).first().text().replace(/\s+/g, ' ').trim();
+        if (chunk.length >= 200) { text = chunk; break; }
+      }
+      if (!text) text = $('body').text().replace(/\s+/g, ' ').trim();
+      return text
+        .split(/[.。!?…\n]|(?<=다)\s|(?<=요)\s|(?<=다\.)\s/)
+        .map(s => s.trim())
+        .filter(s => s.length >= 10 && s.length <= 300 && /[가-힣]/.test(s));
     }
 
     if (source.type === 'namu') {
