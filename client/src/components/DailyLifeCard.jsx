@@ -9,23 +9,31 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
   const drag = useRef({ active: false, startX: 0, dx: 0 });
   const [swipeDir, setSwipeDir] = useState(null);
 
-  function clientX(e) {
-    return e.touches ? e.touches[0].clientX : e.clientX;
+  function point(e) {
+    const t = e.touches ? e.touches[0] : e;
+    return { x: t.clientX, y: t.clientY };
   }
 
   function onDragStart(e) {
     if (interestPending) return;
-    drag.current = { active: true, startX: clientX(e), dx: 0 };
+    const p = point(e);
+    drag.current = { active: false, startX: p.x, startY: p.y, dx: 0 };
     if (wrapRef.current) wrapRef.current.style.transition = 'none';
   }
 
   function onDragMove(e) {
-    if (!drag.current.active) return;
-    const dx = clientX(e) - drag.current.startX;
-    drag.current.dx = dx;
-    if (wrapRef.current) {
-      wrapRef.current.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
+    if (!drag.current.startX && drag.current.startX !== 0) return;
+    const p = point(e);
+    const dx = p.x - drag.current.startX;
+    const dy = p.y - drag.current.startY;
+    if (!drag.current.active) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)) { drag.current.startX = null; return; }
+      drag.current.active = true;
     }
+    drag.current.dx = dx;
+    if (wrapRef.current)
+      wrapRef.current.style.transform = `translateX(${dx}px) rotate(${dx * 0.05}deg)`;
     setSwipeDir(dx > 40 ? 'right' : dx < -40 ? 'left' : null);
   }
 
@@ -34,22 +42,17 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
     drag.current.active = false;
     const dx = drag.current.dx;
     drag.current.dx = 0;
-
-    if (dx > THRESHOLD) {
-      fly(1, onInterest);
-    } else if (dx < -THRESHOLD) {
-      fly(-1, onSkip);
-    } else {
-      snapBack();
-    }
+    if (dx > THRESHOLD) fly(1, onInterest);
+    else if (dx < -THRESHOLD) fly(-1, onSkip);
+    else snapBack();
   }
 
-  function fly(dir, callback) {
+  function fly(dir, cb) {
     if (!wrapRef.current) return;
     wrapRef.current.style.transition = 'transform 0.3s ease-in';
     wrapRef.current.style.transform = `translateX(${dir * 130}%) rotate(${dir * 25}deg)`;
     setSwipeDir(null);
-    setTimeout(() => callback?.(), 250);
+    setTimeout(() => cb?.(), 250);
   }
 
   function snapBack() {
@@ -76,7 +79,11 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
       <span className="swipe-badge swipe-badge-right">관심</span>
 
       <article className="candidate-card">
-        <p className="card-daily-label">오늘의 하루</p>
+        <div className="card-day-header">
+          <span className="card-day-label">오늘의 하루</span>
+          <span className="card-day-dot" />
+          <span className="card-day-label">{dailyMoments.length}장면</span>
+        </div>
 
         <div className="card-moments">
           {dailyMoments.map((m, i) => (
@@ -86,12 +93,12 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
                   src={m.imageUrl}
                   alt={m.caption}
                   className="moment-image"
-                  onError={e => { e.target.style.display = 'none'; }}
                   draggable="false"
+                  onError={e => { e.target.style.display = 'none'; }}
                 />
+                <span className="moment-time-badge">{m.time}</span>
               </div>
-              <div className="moment-info">
-                <time className="moment-time">{m.time}</time>
+              <div className="moment-caption-wrap">
                 <p className="moment-caption">{m.caption}</p>
               </div>
             </div>
@@ -99,7 +106,9 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
         </div>
 
         <footer className="card-footer">
-          <button className="btn-secondary" onClick={onSkip} disabled={interestPending}>넘기기</button>
+          <button className="btn-secondary" onClick={onSkip} disabled={interestPending}>
+            넘기기
+          </button>
           <button className="btn-primary" onClick={onInterest} disabled={interestPending}>
             {interestPending ? '…' : '더 알아보고 싶어요'}
           </button>
