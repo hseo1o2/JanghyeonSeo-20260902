@@ -10,6 +10,7 @@ import LogRoom from './pages/LogRoom.jsx';
 import './global.css';
 
 warmupHealth();
+setInterval(warmupHealth, 14 * 60 * 1000);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

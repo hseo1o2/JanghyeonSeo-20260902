@@ -9,6 +9,49 @@
 
 **추천 경로:** 시작하기 → 카드 오른쪽 스와이프(관심) → 매칭되었어요 → **오늘 로그 시작하기** → 나|상대 장면, 리액션, 지금 올리기
 
+---
+
+## 스크린샷
+
+| 랜딩 | B — daily_first | A — profile_first | 로그 룸 |
+|:---:|:---:|:---:|:---:|
+| ![랜딩](docs/screenshots/01_landing.png) | ![일상 먼저](docs/screenshots/02_daily_first_card.png) | ![프로필 먼저](docs/screenshots/03_profile_first_card.png) | ![로그 룸](docs/screenshots/05_logroom.png) |
+
+---
+
+## 아키텍처
+
+```
+Browser (Vercel)                  Server (Render)               External
+┌──────────────────────┐          ┌─────────────────────────┐
+│  React + Vite        │          │  Node.js + Express       │
+│                      │          │                          │
+│  Landing             │  POST    │  /api/experiment/start   │
+│  ├─ condition 배정   │ ──────►  │  └─ sessionId 생성       │
+│  └─ warmupHealth()   │          │     condition 고정       │
+│                      │          │                          │
+│  Experiment (A|B)    │  GET     │  /api/candidates         │
+│  ├─ DailyLifeCard    │ ◄──────  │  └─ seededShuffle        │
+│  └─ ProfileCard      │          │     8명 고정 순서        │
+│                      │          │                          │
+│  스와이프/버튼       │  POST    │  /api/events             │──► Supabase
+│  └─ 관심/넘기기      │ ──────►  │  └─ 이벤트 기록          │    PostgreSQL
+│                      │          │                          │
+│  daily_first만:      │  POST    │  /api/candidates/:id     │
+│  └─ 프로필 공개 요청 │ ──────►  │  /reveal                 │
+│                      │          │                          │
+│  LogRoom             │  POST    │  /api/chat               │──► OpenAI
+│  ├─ 장면 타임라인    │ ◄──────  │  └─ GPT-4o-mini          │    GPT-4o-mini
+│  └─ 지금 올리기      │          │     (장면·직업만 근거)   │
+│                      │          │                          │
+└──────────────────────┘          └─────────────────────────┘
+
+GitHub Actions: 12분마다 /api/health ping → Render cold start 방지
+client/src/main.jsx: setInterval(warmupHealth, 14분) → 클라이언트 측 보조 킵얼라이브
+```
+
+---
+
 > **두 발견 조건 모두 보려면**
 > - B (daily_first): https://client-theta-ten-88.vercel.app?condition=daily_first
 > - A (profile_first): https://client-theta-ten-88.vercel.app?condition=profile_first
