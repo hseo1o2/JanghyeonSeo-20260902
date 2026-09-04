@@ -54,7 +54,19 @@ export default function Experiment() {
       if (index === 0) {
         try {
           const cached = JSON.parse(localStorage.getItem('firstCandidate') || 'null');
-          if (cached?.id === id) data = cached;
+          if (cached?.id === id) {
+            const folder = id.replace('candidate_', 'candidate-');
+            data = {
+              ...cached,
+              dailyMoments: (cached.dailyMoments || []).map((m, i) => ({
+                ...m,
+                imageUrl: `/candidates/${folder}/moment-${i + 1}.jpg`,
+              })),
+              profile: cached.profile
+                ? { ...cached.profile, imageUrl: `/candidates/${folder}/profile.jpg` }
+                : cached.profile,
+            };
+          }
         } catch { /* ignore */ }
         localStorage.removeItem('firstCandidate');
       }
