@@ -8,14 +8,6 @@ export default function ConversationStarter({ candidateId, sessionId, condition 
   const [error, setError] = useState(null);
 
   async function handleRequest() {
-    postEvent({
-      sessionId, condition,
-      candidateId,
-      event: 'conversation_intent_clicked',
-      elapsedMs: 0,
-      timestamp: new Date().toISOString(),
-    }).catch(() => {});
-
     setLoading(true);
     setError(null);
     try {
@@ -23,6 +15,13 @@ export default function ConversationStarter({ candidateId, sessionId, condition 
       if (items.length === 0) {
         setError('대화 주제를 생성하지 못했어요. 잠시 후 다시 시도해주세요.');
       } else {
+        postEvent({
+          sessionId, condition,
+          candidateId,
+          event: 'conversation_intent_clicked',
+          elapsedMs: 0,
+          timestamp: new Date().toISOString(),
+        }).catch(() => {});
         setStarters(items);
       }
     } catch {
