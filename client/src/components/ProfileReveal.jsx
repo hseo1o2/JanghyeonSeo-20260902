@@ -36,7 +36,7 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
     <div className="reveal-overlay">
       <div className="reveal-sheet">
         <div className="reveal-handle" />
-        <p className="reveal-badge">매칭 · 프로필</p>
+        <p className="reveal-badge">프로필 공개</p>
 
         <div className="reveal-image-wrap">
           <img

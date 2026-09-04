@@ -11,7 +11,6 @@ export default function ProfileCard({ candidate, onSkip, onInterest, interestPen
       <span className="swipe-badge swipe-badge-right">관심</span>
 
       <article className="candidate-card">
-        {/* Hero image with name overlay */}
         <div className="card-hero">
           <img
             src={profile.imageUrl}
@@ -29,7 +28,6 @@ export default function ProfileCard({ candidate, onSkip, onInterest, interestPen
           </div>
         </div>
 
-        {/* Info section */}
         <div className="card-info">
           <div className="card-occupation-row">
             <span className="card-occupation-icon">💼</span>
@@ -50,7 +48,7 @@ export default function ProfileCard({ candidate, onSkip, onInterest, interestPen
             넘기기
           </button>
           <button className="btn-primary" onClick={onInterest} disabled={interestPending}>
-            {interestPending ? '…' : '더 알아보고 싶어요'}
+            {interestPending ? '…' : '관심 있어요'}
           </button>
         </footer>
       </article>

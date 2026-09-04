@@ -44,7 +44,7 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
             넘기기
           </button>
           <button className="btn-primary" onClick={onInterest} disabled={interestPending}>
-            {interestPending ? '…' : '더 알아보고 싶어요'}
+            {interestPending ? '…' : '관심 있어요'}
           </button>
         </footer>
       </article>

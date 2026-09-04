@@ -303,7 +303,7 @@ export default function LogRoom() {
       </ol>
 
       <section className="log-thread" ref={threadRef}>
-        <p className="log-thread-label">Zip · 지금 하는 말</p>
+        <p className="log-thread-label">지금 하는 말</p>
         {(match.messages || []).length === 0 && !typing && (
           <p className="log-thread-empty">{match.name}이 오늘 장면으로 먼저 말 걸어요.</p>
         )}

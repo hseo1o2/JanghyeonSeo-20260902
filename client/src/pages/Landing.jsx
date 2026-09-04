@@ -12,7 +12,6 @@ export default function Landing() {
   const slowTimer = useRef(null);
   const user = getUser();
 
-  // Resume in-progress sessions. Otherwise wake Render and prefetch /start.
   useEffect(() => {
     try {
       const sid   = localStorage.getItem('sessionId');
@@ -60,7 +59,6 @@ export default function Landing() {
 
   return (
     <main className="landing">
-      {/* Auth bar */}
       <div className="landing-auth-bar">
         {user ? (
           <div className="landing-user-row">
@@ -77,13 +75,19 @@ export default function Landing() {
 
       <div className="landing-visual" aria-hidden="true">
         <div className="moment-strip">
+          <img src="/candidates/candidate-01/moment-1.jpg" alt="" className="moment-strip-img" />
+          <div className="moment-strip-overlay" />
           <span className="moment-strip-label">07:30</span>
         </div>
         <div className="moment-strip">
-          <span className="moment-strip-label">12:15</span>
+          <img src="/candidates/candidate-02/moment-2.jpg" alt="" className="moment-strip-img" />
+          <div className="moment-strip-overlay" />
+          <span className="moment-strip-label">13:00</span>
         </div>
         <div className="moment-strip">
-          <span className="moment-strip-label">22:00</span>
+          <img src="/candidates/candidate-03/moment-4.jpg" alt="" className="moment-strip-img" />
+          <div className="moment-strip-overlay" />
+          <span className="moment-strip-label">22:10</span>
         </div>
       </div>
 
@@ -99,18 +103,18 @@ export default function Landing() {
 
         <div className="landing-how">
           <div className="landing-step">
-            <span className="landing-step-icon">🃏</span>
-            <span>카드 보기</span>
+            <span className="landing-step-num">1</span>
+            <span>하루 구경</span>
           </div>
           <span className="landing-step-arrow">→</span>
           <div className="landing-step">
-            <span className="landing-step-icon">👉</span>
-            <span>관심 / 넘기기</span>
+            <span className="landing-step-num">2</span>
+            <span>관심 표현</span>
           </div>
           <span className="landing-step-arrow">→</span>
           <div className="landing-step">
-            <span className="landing-step-icon">➡️</span>
-            <span>다음 후보</span>
+            <span className="landing-step-num">3</span>
+            <span>같이 로그</span>
           </div>
         </div>
 

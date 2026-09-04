@@ -24,46 +24,59 @@
 .login-title {
   font-size: 26px;
   font-weight: 700;
-  margin-bottom: 28px;
+  line-height: 1.3;
+  margin-bottom: 6px;
   color: var(--color-text-primary);
+}
+
+.login-subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 22px;
 }
 
 /* Demo accounts */
 .demo-accounts {
-  margin-bottom: 24px;
-}
-
-.demo-accounts-label {
-  font-size: 11.5px;
-  color: var(--color-text-muted);
-  margin-bottom: 10px;
-  font-weight: 500;
+  margin-bottom: 20px;
 }
 
 .demo-accounts-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  max-height: 240px;
-  overflow-y: auto;
 }
 
 .demo-account-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 12px 14px;
   border-radius: var(--radius-md);
   border: 1.5px solid var(--color-border);
   background: var(--color-surface);
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.12s, background 0.12s;
+  transition: border-color 0.12s, background 0.12s, opacity 0.12s;
 }
 
-.demo-account-btn:hover {
+.demo-account-btn:hover:not(:disabled) {
   border-color: var(--color-accent);
   background: var(--color-accent-bg);
+}
+
+.demo-account-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.demo-account-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.demo-account-btn.loading {
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg);
+  opacity: 1;
 }
 
 .demo-account-name {
@@ -77,6 +90,7 @@
   font-weight: 600;
   padding: 3px 8px;
   border-radius: 100px;
+  white-space: nowrap;
 }
 
 .demo-account-badge.daily_first {
@@ -92,6 +106,24 @@
 .demo-account-badge.random {
   background: var(--color-btn-secondary);
   color: var(--color-text-secondary);
+}
+
+/* Divider */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
 }
 
 /* Form */
@@ -125,6 +157,10 @@
 
 .login-input:focus {
   border-color: var(--color-accent);
+}
+
+.login-input:disabled {
+  opacity: 0.55;
 }
 
 .login-error {

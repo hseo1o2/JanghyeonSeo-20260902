@@ -49,60 +49,81 @@
 
 /* ── Visual hero ── */
 .landing-visual {
-  height: 44dvh;
-  min-height: 220px;
+  height: 48dvh;
+  min-height: 240px;
   flex-shrink: 0;
-  background: #E5E5EF;
+  background: #18181f;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding: 0 20px 20px;
-  gap: 10px;
+  padding: 0 18px 18px;
+  gap: 8px;
 }
 
 .landing-visual::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, #E5E5EF 100%);
+  background: linear-gradient(to bottom, rgba(24, 24, 31, 0.15) 0%, rgba(24, 24, 31, 0.55) 100%);
   pointer-events: none;
+  z-index: 1;
 }
 
-/* Three moment strips — morning / afternoon / evening */
+.landing-visual > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Three moment strips — real photo cards */
 .moment-strip {
   flex: 1;
-  border-radius: 12px;
+  border-radius: 14px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(30, 30, 60, 0.14);
+  box-shadow: 0 8px 24px rgba(10, 10, 24, 0.28);
 }
 
 .moment-strip:nth-child(1) {
-  height: 116px;
-  transform: translateY(10px);
-  background: linear-gradient(165deg, #B8D4C2 0%, #6A9E80 100%);
+  height: 120px;
+  transform: translateY(12px);
 }
 .moment-strip:nth-child(2) {
-  height: 148px;
+  height: 156px;
   transform: translateY(0px);
   z-index: 2;
-  background: linear-gradient(165deg, #D4C4A8 0%, #A88A5A 100%);
 }
 .moment-strip:nth-child(3) {
-  height: 108px;
-  transform: translateY(14px);
-  background: linear-gradient(165deg, #8FAACF 0%, #4A6A9A 100%);
+  height: 110px;
+  transform: translateY(16px);
+}
+
+.moment-strip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.moment-strip-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 24, 0.55) 0%, transparent 55%);
 }
 
 .moment-strip-label {
   position: absolute;
-  bottom: 10px;
-  left: 11px;
-  font-size: 10.5px;
+  bottom: 9px;
+  left: 10px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 2px 7px;
+  border-radius: 100px;
 }
 
 /* ── Body ── */
@@ -155,16 +176,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   flex: 1;
   font-size: 11.5px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-accent);
   text-align: center;
 }
 
-.landing-step-icon {
-  font-size: 20px;
+.landing-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
