@@ -6,6 +6,47 @@
   flex-direction: column;
 }
 
+/* ── Auth bar ── */
+.landing-auth-bar {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 20;
+}
+
+.landing-user-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.landing-user-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.landing-auth-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s;
+  font-family: inherit;
+}
+
+.landing-auth-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
 /* ── Visual hero ── */
 .landing-visual {
   height: 44dvh;

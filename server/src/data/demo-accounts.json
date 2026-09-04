@@ -1,0 +1,72 @@
+[
+  {
+    "id": "demo_01",
+    "email": "user01@demo.com",
+    "password": "Demo1234",
+    "name": "김민지",
+    "forcedCondition": "daily_first"
+  },
+  {
+    "id": "demo_02",
+    "email": "user02@demo.com",
+    "password": "Demo1234",
+    "name": "이준서",
+    "forcedCondition": "profile_first"
+  },
+  {
+    "id": "demo_03",
+    "email": "user03@demo.com",
+    "password": "Demo1234",
+    "name": "박서연",
+    "forcedCondition": "daily_first"
+  },
+  {
+    "id": "demo_04",
+    "email": "user04@demo.com",
+    "password": "Demo1234",
+    "name": "최지호",
+    "forcedCondition": "profile_first"
+  },
+  {
+    "id": "demo_05",
+    "email": "user05@demo.com",
+    "password": "Demo1234",
+    "name": "정하영",
+    "forcedCondition": null
+  },
+  {
+    "id": "demo_06",
+    "email": "user06@demo.com",
+    "password": "Demo1234",
+    "name": "한도윤",
+    "forcedCondition": null
+  },
+  {
+    "id": "demo_07",
+    "email": "user07@demo.com",
+    "password": "Demo1234",
+    "name": "오수빈",
+    "forcedCondition": "daily_first"
+  },
+  {
+    "id": "demo_08",
+    "email": "user08@demo.com",
+    "password": "Demo1234",
+    "name": "임재현",
+    "forcedCondition": "profile_first"
+  },
+  {
+    "id": "demo_09",
+    "email": "user09@demo.com",
+    "password": "Demo1234",
+    "name": "강나은",
+    "forcedCondition": null
+  },
+  {
+    "id": "demo_10",
+    "email": "user10@demo.com",
+    "password": "Demo1234",
+    "name": "윤성준",
+    "forcedCondition": null
+  }
+]

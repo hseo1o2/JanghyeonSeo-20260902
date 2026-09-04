@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { startExperiment, BASE_URL } from '../api/client.js';
+import { getUser, clearAuth } from '../lib/auth.js';
 import './Landing.css';
 
 export default function Landing() {
@@ -9,6 +10,7 @@ export default function Landing() {
   const [slowHint, setSlowHint] = useState(false);
   const [error, setError] = useState(null);
   const slowTimer = useRef(null);
+  const user = getUser();
 
   // Resume existing session if in progress
   useEffect(() => {
@@ -55,6 +57,21 @@ export default function Landing() {
 
   return (
     <main className="landing">
+      {/* Auth bar */}
+      <div className="landing-auth-bar">
+        {user ? (
+          <div className="landing-user-row">
+            <span className="landing-user-name">{user.name}</span>
+            <button
+              className="landing-auth-btn"
+              onClick={() => { clearAuth(); window.location.reload(); }}
+            >로그아웃</button>
+          </div>
+        ) : (
+          <Link to="/login" className="landing-auth-btn">로그인</Link>
+        )}
+      </div>
+
       <div className="landing-visual" aria-hidden="true">
         <div className="moment-strip">
           <span className="moment-strip-label">07:30</span>

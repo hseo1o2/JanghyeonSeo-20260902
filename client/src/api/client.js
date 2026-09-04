@@ -1,8 +1,15 @@
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
+function authHeaders() {
+  try {
+    const token = localStorage.getItem('authToken');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  } catch { return {}; }
+}
+
 async function request(path, options = {}) {
   const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
     ...options,
   });
   if (!res.ok) {
@@ -32,3 +39,9 @@ export const getConversationStarters = (candidateId, sessionId) =>
 
 export const submitSurvey = (payload) =>
   request('/api/survey', { method: 'POST', body: JSON.stringify(payload) });
+
+export const login = (email, password) =>
+  request('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+
+export const getDemoAccounts = () =>
+  request('/api/auth/accounts');

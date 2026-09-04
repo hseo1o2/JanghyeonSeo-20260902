@@ -1,7 +1,19 @@
 import { Router } from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import jwt from 'jsonwebtoken';
 import db from '../db.js';
 import candidates from '../data/candidates.js';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'dailyfirst-demo-secret-2026';
+
+function parseUser(req) {
+  try {
+    const header = req.headers.authorization || '';
+    const token  = header.startsWith('Bearer ') ? header.slice(7) : null;
+    if (!token) return null;
+    return jwt.verify(token, JWT_SECRET);
+  } catch { return null; }
+}
 
 const ALL_CANDIDATE_IDS = candidates.map(c => c.id);
 
@@ -21,19 +33,24 @@ const router = Router();
 router.get('/start', async (req, res) => {
   try {
     const sessionId = uuidv4();
-    const forced = req.query.condition;
+    const user    = parseUser(req);
+    const forced  = req.query.condition || user?.forcedCondition;
     const condition = (forced === 'daily_first' || forced === 'profile_first')
       ? forced
       : (Math.random() < 0.5 ? 'profile_first' : 'daily_first');
     const now = new Date().toISOString();
 
-    const { error } = await db.from('sessions').insert({ id: sessionId, condition, created_at: now });
+    const row = { id: sessionId, condition, created_at: now };
+    if (user?.id) row.user_id = user.id;
+
+    const { error } = await db.from('sessions').insert(row);
     if (error) throw error;
 
     res.json({
       sessionId,
       condition,
       candidateIds: seededShuffle(ALL_CANDIDATE_IDS, sessionId),
+      user: user ? { id: user.id, name: user.name } : null,
     });
   } catch (err) {
     console.error('[experiment] start failed:', err.message);

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 
 import './db.js';
 import healthRouter from './routes/health.js';
+import authRouter from './routes/auth.js';
 import candidatesRouter from './routes/candidates.js';
 import experimentRouter from './routes/experiment.js';
 import eventsRouter from './routes/events.js';
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use('/api/health', healthRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/experiment', experimentRouter);
 app.use('/api/candidates', candidatesRouter);
 app.use('/api/events', eventsRouter);
