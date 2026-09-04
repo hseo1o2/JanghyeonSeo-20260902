@@ -5,15 +5,35 @@
       "name": "민준",
       "age": 25,
       "occupation": "제품 디자이너",
-      "hobbies": ["러닝", "독립서점", "보드게임"],
+      "hobbies": [
+        "러닝",
+        "독립서점",
+        "보드게임"
+      ],
       "bio": "퇴근 후 새로운 동네를 걷는 걸 좋아해요.",
-      "imageUrl": "/assets/candidate-01/profile.jpg"
+      "imageUrl": "https://picsum.photos/seed/cand01p/400/500"
     },
     "dailyMoments": [
-      { "time": "08:42", "caption": "비 와서 버스 대신 지하철", "imageUrl": "/assets/candidate-01/moment-1.jpg" },
-      { "time": "12:16", "caption": "회사 근처에서 혼자 점심", "imageUrl": "/assets/candidate-01/moment-2.jpg" },
-      { "time": "18:37", "caption": "퇴근 후 한강 5km", "imageUrl": "/assets/candidate-01/moment-3.jpg" },
-      { "time": "23:11", "caption": "친구들이랑 보드게임", "imageUrl": "/assets/candidate-01/moment-4.jpg" }
+      {
+        "time": "08:42",
+        "caption": "비 와서 버스 대신 지하철",
+        "imageUrl": "https://picsum.photos/seed/cand01m1/600/400"
+      },
+      {
+        "time": "12:16",
+        "caption": "회사 근처에서 혼자 점심",
+        "imageUrl": "https://picsum.photos/seed/cand01m2/600/400"
+      },
+      {
+        "time": "18:37",
+        "caption": "퇴근 후 한강 5km",
+        "imageUrl": "https://picsum.photos/seed/cand01m3/600/400"
+      },
+      {
+        "time": "23:11",
+        "caption": "친구들이랑 보드게임",
+        "imageUrl": "https://picsum.photos/seed/cand01m4/600/400"
+      }
     ]
   },
   {
@@ -22,15 +42,35 @@
       "name": "지수",
       "age": 24,
       "occupation": "콘텐츠 마케터",
-      "hobbies": ["요가", "카페 투어", "독서"],
+      "hobbies": [
+        "요가",
+        "카페 투어",
+        "독서"
+      ],
       "bio": "매일 아침 커피 한 잔으로 하루를 시작해요.",
-      "imageUrl": "/assets/candidate-02/profile.jpg"
+      "imageUrl": "https://picsum.photos/seed/cand02p/400/500"
     },
     "dailyMoments": [
-      { "time": "07:55", "caption": "출근 전 동네 카페 들름", "imageUrl": "/assets/candidate-02/moment-1.jpg" },
-      { "time": "12:30", "caption": "혼자 국밥 한 그릇", "imageUrl": "/assets/candidate-02/moment-2.jpg" },
-      { "time": "19:10", "caption": "퇴근 후 스튜디오 요가", "imageUrl": "/assets/candidate-02/moment-3.jpg" },
-      { "time": "22:40", "caption": "침대에서 책 조금", "imageUrl": "/assets/candidate-02/moment-4.jpg" }
+      {
+        "time": "07:55",
+        "caption": "출근 전 동네 카페 들름",
+        "imageUrl": "https://picsum.photos/seed/cand02m1/600/400"
+      },
+      {
+        "time": "12:30",
+        "caption": "혼자 국밥 한 그릇",
+        "imageUrl": "https://picsum.photos/seed/cand02m2/600/400"
+      },
+      {
+        "time": "19:10",
+        "caption": "퇴근 후 스튜디오 요가",
+        "imageUrl": "https://picsum.photos/seed/cand02m3/600/400"
+      },
+      {
+        "time": "22:40",
+        "caption": "침대에서 책 조금",
+        "imageUrl": "https://picsum.photos/seed/cand02m4/600/400"
+      }
     ]
   },
   {
@@ -39,15 +79,35 @@
       "name": "도현",
       "age": 27,
       "occupation": "백엔드 개발자",
-      "hobbies": ["헬스", "요리", "미드 정주행"],
+      "hobbies": [
+        "헬스",
+        "요리",
+        "미드 정주행"
+      ],
       "bio": "주말에 뭘 해먹을지 고민하는 게 취미예요.",
-      "imageUrl": "/assets/candidate-03/profile.jpg"
+      "imageUrl": "https://picsum.photos/seed/cand03p/400/500"
     },
     "dailyMoments": [
-      { "time": "09:03", "caption": "재택 시작 전 아메리카노", "imageUrl": "/assets/candidate-03/moment-1.jpg" },
-      { "time": "13:20", "caption": "점심은 어제 해둔 파스타", "imageUrl": "/assets/candidate-03/moment-2.jpg" },
-      { "time": "20:15", "caption": "헬스장 마감 30분 전 입장", "imageUrl": "/assets/candidate-03/moment-3.jpg" },
-      { "time": "23:50", "caption": "미드 한 편 보다 취침", "imageUrl": "/assets/candidate-03/moment-4.jpg" }
+      {
+        "time": "09:03",
+        "caption": "재택 시작 전 아메리카노",
+        "imageUrl": "https://picsum.photos/seed/cand03m1/600/400"
+      },
+      {
+        "time": "13:20",
+        "caption": "점심은 어제 해둔 파스타",
+        "imageUrl": "https://picsum.photos/seed/cand03m2/600/400"
+      },
+      {
+        "time": "20:15",
+        "caption": "헬스장 마감 30분 전 입장",
+        "imageUrl": "https://picsum.photos/seed/cand03m3/600/400"
+      },
+      {
+        "time": "23:50",
+        "caption": "미드 한 편 보다 취침",
+        "imageUrl": "https://picsum.photos/seed/cand03m4/600/400"
+      }
     ]
   },
   {
@@ -56,15 +116,35 @@
       "name": "세연",
       "age": 23,
       "occupation": "대학원생 (심리학)",
-      "hobbies": ["수채화", "산책", "팟캐스트"],
+      "hobbies": [
+        "수채화",
+        "산책",
+        "팟캐스트"
+      ],
       "bio": "혼자 있는 시간을 좋아하는데 외롭진 않아요.",
-      "imageUrl": "/assets/candidate-04/profile.jpg"
+      "imageUrl": "https://picsum.photos/seed/cand04p/400/500"
     },
     "dailyMoments": [
-      { "time": "10:30", "caption": "도서관 개관 시간에 맞춰 출발", "imageUrl": "/assets/candidate-04/moment-1.jpg" },
-      { "time": "13:45", "caption": "샌드위치 들고 캠퍼스 벤치", "imageUrl": "/assets/candidate-04/moment-2.jpg" },
-      { "time": "17:00", "caption": "퇴근길 팟캐스트 들으면서 걷기", "imageUrl": "/assets/candidate-04/moment-3.jpg" },
-      { "time": "21:30", "caption": "오늘도 수채화 조금", "imageUrl": "/assets/candidate-04/moment-4.jpg" }
+      {
+        "time": "10:30",
+        "caption": "도서관 개관 시간에 맞춰 출발",
+        "imageUrl": "https://picsum.photos/seed/cand04m1/600/400"
+      },
+      {
+        "time": "13:45",
+        "caption": "샌드위치 들고 캠퍼스 벤치",
+        "imageUrl": "https://picsum.photos/seed/cand04m2/600/400"
+      },
+      {
+        "time": "17:00",
+        "caption": "퇴근길 팟캐스트 들으면서 걷기",
+        "imageUrl": "https://picsum.photos/seed/cand04m3/600/400"
+      },
+      {
+        "time": "21:30",
+        "caption": "오늘도 수채화 조금",
+        "imageUrl": "https://picsum.photos/seed/cand04m4/600/400"
+      }
     ]
   },
   {
@@ -73,15 +153,35 @@
       "name": "준호",
       "age": 26,
       "occupation": "서비스 기획자",
-      "hobbies": ["야구 직관", "등산", "기타"],
+      "hobbies": [
+        "야구 직관",
+        "등산",
+        "기타"
+      ],
       "bio": "계획 짜는 걸 좋아하는데 즉흥 여행도 좋아요.",
-      "imageUrl": "/assets/candidate-05/profile.jpg"
+      "imageUrl": "https://picsum.photos/seed/cand05p/400/500"
     },
     "dailyMoments": [
-      { "time": "08:10", "caption": "지하철 2호선 출근", "imageUrl": "/assets/candidate-05/moment-1.jpg" },
-      { "time": "12:00", "caption": "팀이랑 삼겹살 점심", "imageUrl": "/assets/candidate-05/moment-2.jpg" },
-      { "time": "19:30", "caption": "잠실 야구장 퇴근 직행", "imageUrl": "/assets/candidate-05/moment-3.jpg" },
-      { "time": "23:00", "caption": "귀가하면서 치킨 주문", "imageUrl": "/assets/candidate-05/moment-4.jpg" }
+      {
+        "time": "08:10",
+        "caption": "지하철 2호선 출근",
+        "imageUrl": "https://picsum.photos/seed/cand05m1/600/400"
+      },
+      {
+        "time": "12:00",
+        "caption": "팀이랑 삼겹살 점심",
+        "imageUrl": "https://picsum.photos/seed/cand05m2/600/400"
+      },
+      {
+        "time": "19:30",
+        "caption": "잠실 야구장 퇴근 직행",
+        "imageUrl": "https://picsum.photos/seed/cand05m3/600/400"
+      },
+      {
+        "time": "23:00",
+        "caption": "귀가하면서 치킨 주문",
+        "imageUrl": "https://picsum.photos/seed/cand05m4/600/400"
+      }
     ]
   },
   {
@@ -90,15 +190,35 @@
       "name": "하은",
       "age": 24,
       "occupation": "브랜드 디자이너 (프리랜서)",
-      "hobbies": ["필름 사진", "수영", "시장 구경"],
+      "hobbies": [
+        "필름 사진",
+        "수영",
+        "시장 구경"
+      ],
       "bio": "카페에서 일하는 게 집보다 집중이 잘 돼요.",
-      "imageUrl": "/assets/candidate-06/profile.jpg"
+      "imageUrl": "https://picsum.photos/seed/cand06p/400/500"
     },
     "dailyMoments": [
-      { "time": "10:00", "caption": "오늘의 작업 카페 고르는 중", "imageUrl": "/assets/candidate-06/moment-1.jpg" },
-      { "time": "13:10", "caption": "편의점 도시락 + 아이스 라떼", "imageUrl": "/assets/candidate-06/moment-2.jpg" },
-      { "time": "17:45", "caption": "수영장 50m 레인 20바퀴", "imageUrl": "/assets/candidate-06/moment-3.jpg" },
-      { "time": "20:30", "caption": "망원 시장 저녁 산책", "imageUrl": "/assets/candidate-06/moment-4.jpg" }
+      {
+        "time": "10:00",
+        "caption": "오늘의 작업 카페 고르는 중",
+        "imageUrl": "https://picsum.photos/seed/cand06m1/600/400"
+      },
+      {
+        "time": "13:10",
+        "caption": "편의점 도시락 + 아이스 라떼",
+        "imageUrl": "https://picsum.photos/seed/cand06m2/600/400"
+      },
+      {
+        "time": "17:45",
+        "caption": "수영장 50m 레인 20바퀴",
+        "imageUrl": "https://picsum.photos/seed/cand06m3/600/400"
+      },
+      {
+        "time": "20:30",
+        "caption": "망원 시장 저녁 산책",
+        "imageUrl": "https://picsum.photos/seed/cand06m4/600/400"
+      }
     ]
   }
 ]

@@ -1,5 +1,4 @@
 import './CandidateCard.css';
-import { BASE_URL as BASE } from '../api/client.js';
 
 export default function ProfileCard({ candidate, onSkip, onInterest, interestPending }) {
   const { profile } = candidate;
@@ -8,7 +7,7 @@ export default function ProfileCard({ candidate, onSkip, onInterest, interestPen
     <article className="candidate-card">
       <div className="card-image-wrap">
         <img
-          src={`${BASE}${profile.imageUrl}`}
+          src={profile.imageUrl}
           alt="후보 프로필"
           className="card-image"
           onError={e => { e.target.style.display = 'none'; }}

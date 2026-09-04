@@ -13,7 +13,7 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
 
         <div className="reveal-image-wrap">
           <img
-            src={`${BASE}${profile.imageUrl}`}
+            src={profile.imageUrl}
             alt="후보 프로필"
             className="reveal-image"
             onError={e => { e.target.style.display = 'none'; }}

@@ -21,7 +21,10 @@ const router = Router();
 router.get('/start', async (req, res) => {
   try {
     const sessionId = uuidv4();
-    const condition = Math.random() < 0.5 ? 'profile_first' : 'daily_first';
+    const forced = req.query.condition;
+    const condition = (forced === 'daily_first' || forced === 'profile_first')
+      ? forced
+      : (Math.random() < 0.5 ? 'profile_first' : 'daily_first');
     const now = new Date().toISOString();
 
     const { error } = await db.from('sessions').insert({ id: sessionId, condition, created_at: now });

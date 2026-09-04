@@ -26,7 +26,9 @@ export default function Landing() {
     setLoading(true);
     setError(null);
     try {
-      const { sessionId, condition, candidateIds } = await startExperiment();
+      // ?condition=daily_first or ?condition=profile_first forces a specific condition (demo용)
+      const forced = new URLSearchParams(window.location.search).get('condition');
+      const { sessionId, condition, candidateIds } = await startExperiment(forced || undefined);
       localStorage.setItem('sessionId', sessionId);
       localStorage.setItem('condition', condition);
       localStorage.setItem('candidateIds', JSON.stringify(candidateIds));
@@ -42,10 +44,10 @@ export default function Landing() {
   return (
     <main className="landing">
       <div className="landing-content">
-        <p className="landing-eyebrow">Daily-life-first experiment</p>
+        <p className="landing-eyebrow">만남 전 하루 엿보기</p>
         <h1 className="landing-title">
-          프로필보다 하루를 먼저 보면,<br />
-          사람을 다르게 보게 될까요?
+          만나기 전에,<br />
+          하루를 조금 알아보고 싶다면
         </h1>
         <p className="landing-desc">
           몇 명의 후보를 보고 더 알아보고 싶은 사람을 선택해주세요.<br />

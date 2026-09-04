@@ -1,5 +1,4 @@
 import './CandidateCard.css';
-import { BASE_URL as BASE } from '../api/client.js';
 
 export default function DailyLifeCard({ candidate, onSkip, onInterest, interestPending }) {
   const { dailyMoments } = candidate;
@@ -13,7 +12,7 @@ export default function DailyLifeCard({ candidate, onSkip, onInterest, interestP
           <div key={i} className="moment">
             <div className="moment-image-wrap">
               <img
-                src={`${BASE}${m.imageUrl}`}
+                src={m.imageUrl}
                 alt={m.caption}
                 className="moment-image"
                 onError={e => { e.target.style.display = 'none'; }}

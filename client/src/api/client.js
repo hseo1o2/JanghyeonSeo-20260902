@@ -12,7 +12,8 @@ async function request(path, options = {}) {
   return res.json();
 }
 
-export const startExperiment = () => request('/api/experiment/start');
+export const startExperiment = (condition) =>
+  request(`/api/experiment/start${condition ? `?condition=${condition}` : ''}`);
 
 export const getCandidate = (id, sessionId) =>
   request(`/api/candidates/${id}?sessionId=${sessionId}`);
