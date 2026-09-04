@@ -10,6 +10,7 @@ import candidatesRouter from './routes/candidates.js';
 import experimentRouter from './routes/experiment.js';
 import eventsRouter from './routes/events.js';
 import startersRouter from './routes/starters.js';
+import surveyRouter from './routes/survey.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 4000;
@@ -29,6 +30,7 @@ app.use('/api/experiment', experimentRouter);
 app.use('/api/candidates', candidatesRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/conversation-starters', startersRouter);
+app.use('/api/survey', surveyRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
