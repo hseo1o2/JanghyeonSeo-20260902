@@ -10,11 +10,15 @@ export default function Landing() {
 
   // Resume existing session instead of re-rolling
   useEffect(() => {
-    const sid   = localStorage.getItem('sessionId');
-    const index = parseInt(localStorage.getItem('candidateIndex') || '0', 10);
-    const ids   = JSON.parse(localStorage.getItem('candidateIds') || '[]');
-    if (sid && index < ids.length) {
-      navigate('/experiment', { replace: true });
+    try {
+      const sid   = localStorage.getItem('sessionId');
+      const index = parseInt(localStorage.getItem('candidateIndex') || '0', 10);
+      const ids   = JSON.parse(localStorage.getItem('candidateIds') || '[]');
+      if (sid && index < ids.length) {
+        navigate('/experiment', { replace: true });
+      }
+    } catch {
+      // malformed localStorage — ignore and let user start fresh
     }
   }, [navigate]);
 

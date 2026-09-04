@@ -54,7 +54,7 @@ export default function Experiment() {
       setCandidate(data);
       const now = Date.now();
       setViewedAt(now);
-      requestAnimationFrame(() => setCardVisible(true));
+      requestAnimationFrame(() => requestAnimationFrame(() => setCardVisible(true)));
       // Fire-and-forget: logging failure must not block card display
       postEvent({
         sessionId, condition,

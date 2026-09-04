@@ -68,5 +68,5 @@
 .landing-error {
   margin-top: 16px;
   font-size: 13px;
-  color: #c0392b;
+  color: var(--color-error);
 }
