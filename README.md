@@ -4,7 +4,8 @@
 
 소개팅 앱에서 **정적 프로필(사진+나이+직업)보다 일상 순간을 먼저 보여줬을 때** 호기심 클릭률이 높아지는가를 측정하는 A/B 실험 MVP입니다.
 
-**배포 URL:** https://client-theta-ten-88.vercel.app
+**배포 URL:** https://client-theta-ten-88.vercel.app  
+**GitHub:** https://github.com/hseo1o2/JanghyeonSeo-20260902
 
 ---
 
