@@ -1,0 +1,12 @@
+{
+  "name": "daily-first-crawler",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "crawl": "node crawl.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0"
+  }
+}

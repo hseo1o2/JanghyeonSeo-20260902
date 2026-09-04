@@ -1,0 +1,190 @@
+.candidate-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Profile card image */
+.card-image-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Profile card body */
+.card-body {
+  padding: 20px 20px 0;
+}
+
+.card-identity {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.card-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.card-age {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+.card-occupation {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.card-hobbies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.card-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  background: var(--color-btn-secondary);
+  border-radius: 100px;
+  color: var(--color-text-secondary);
+}
+
+.card-bio {
+  font-size: 14px;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  padding-bottom: 20px;
+  word-break: keep-all;
+}
+
+/* Daily life card */
+.card-daily-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 20px 20px 14px;
+}
+
+.card-moments {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+.moment {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.moment:first-child {
+  border-top: none;
+}
+
+.moment-image-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.moment-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.moment-time {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.moment-caption {
+  font-size: 14px;
+  color: var(--color-text-primary);
+  word-break: keep-all;
+  line-height: 1.5;
+}
+
+/* Shared footer — identical layout on both A and B */
+.card-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-btn-secondary);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.btn-secondary:hover {
+  background: var(--color-btn-secondary-hover);
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

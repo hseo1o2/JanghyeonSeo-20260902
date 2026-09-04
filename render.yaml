@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: daily-first-server
+    env: node
+    plan: free
+    region: oregon
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.5.0
+      - key: OPENAI_API_KEY
+        sync: false          # set manually in Render dashboard
+      - key: CLIENT_ORIGIN
+        sync: false          # set to your Vercel deployment URL
