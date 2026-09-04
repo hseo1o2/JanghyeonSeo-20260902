@@ -51,6 +51,8 @@ export default function Landing() {
           몇 명의 후보를 보고 더 알아보고 싶은 사람을 선택해주세요.<br />
           약 2~3분 소요됩니다.
         </p>
+      </div>
+      <div className="landing-footer">
         <button
           className="btn-primary landing-cta"
           onClick={handleStart}
