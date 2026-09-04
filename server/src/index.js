@@ -4,7 +4,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import './db.js'; // initializes tables on startup
+import './db.js';
 import healthRouter from './routes/health.js';
 import candidatesRouter from './routes/candidates.js';
 import experimentRouter from './routes/experiment.js';
@@ -34,7 +34,4 @@ app.use('/api/survey', surveyRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  if (process.env.RENDER) {
-    console.warn('[storage] Running on Render free tier — SQLite is ephemeral. Data resets on redeploy/cold-start.');
-  }
 });
