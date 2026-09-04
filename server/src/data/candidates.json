@@ -11,28 +11,28 @@
         "보드게임"
       ],
       "bio": "퇴근 후 새로운 동네를 걸으면서 생각 정리하는 걸 좋아해요. 작은 서점 발견하면 일단 들어가야 직성이 풀려요.",
-      "imageUrl": "https://randomuser.me/api/portraits/men/10.jpg"
+      "imageUrl": "/candidates/candidate-01/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "08:42",
         "caption": "비 와서 버스 포기하고 지하철로. 우산 챙긴 나 칭찬",
-        "imageUrl": "https://picsum.photos/seed/cand01m1/600/400"
+        "imageUrl": "/candidates/candidate-01/moment-1.jpg"
       },
       {
         "time": "12:16",
         "caption": "회의 세 개 끝나고 드디어 밥. 혼자라서 조용해서 오히려 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand01m2/600/400"
+        "imageUrl": "/candidates/candidate-01/moment-2.jpg"
       },
       {
         "time": "18:37",
         "caption": "비 그친 한강. 이어폰 끼고 5km 뛰었더니 하루가 다 정리된 느낌",
-        "imageUrl": "https://picsum.photos/seed/cand01m3/600/400"
+        "imageUrl": "/candidates/candidate-01/moment-3.jpg"
       },
       {
         "time": "23:11",
         "caption": "친구들이랑 보드게임. 내가 꼴찌여도 이상하게 즐거운 밤",
-        "imageUrl": "https://picsum.photos/seed/cand01m4/600/400"
+        "imageUrl": "/candidates/candidate-01/moment-4.jpg"
       }
     ]
   },
@@ -48,28 +48,28 @@
         "독서"
       ],
       "bio": "매일 아침 커피 한 잔으로 하루를 시작해요. 좋은 공간에서 좋은 글 쓸 때 가장 행복해요.",
-      "imageUrl": "https://randomuser.me/api/portraits/women/11.jpg"
+      "imageUrl": "/candidates/candidate-02/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "07:55",
         "caption": "출근 전 동네 작은 카페. 여기 원두 진짜 맛있는데 사람이 없어서 아직 비밀임",
-        "imageUrl": "https://picsum.photos/seed/cand02m1/600/400"
+        "imageUrl": "/candidates/candidate-02/moment-1.jpg"
       },
       {
         "time": "12:30",
         "caption": "혼자 국밥 한 그릇. 이게 점심의 정석인 것 같음",
-        "imageUrl": "https://picsum.photos/seed/cand02m2/600/400"
+        "imageUrl": "/candidates/candidate-02/moment-2.jpg"
       },
       {
         "time": "19:10",
         "caption": "퇴근 후 스튜디오 요가. 땀 흘리고 나면 머릿속이 리셋되는 느낌",
-        "imageUrl": "https://picsum.photos/seed/cand02m3/600/400"
+        "imageUrl": "/candidates/candidate-02/moment-3.jpg"
       },
       {
         "time": "22:40",
         "caption": "오늘 읽던 책 마지막 챕터. 결말이 좋아서 조금 멍하니 있었음",
-        "imageUrl": "https://picsum.photos/seed/cand02m4/600/400"
+        "imageUrl": "/candidates/candidate-02/moment-4.jpg"
       }
     ]
   },
@@ -85,28 +85,28 @@
         "미드 정주행"
       ],
       "bio": "주말에 뭘 해먹을지 고민하는 게 취미예요. 결국 항상 먹고 나서 후회 없이 만족해요.",
-      "imageUrl": "https://randomuser.me/api/portraits/men/21.jpg"
+      "imageUrl": "/candidates/candidate-03/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "09:03",
         "caption": "재택 첫 커밋 전 아메리카노 한 잔은 의식 같은 거. 없으면 하루가 안 열림",
-        "imageUrl": "https://picsum.photos/seed/cand03m1/600/400"
+        "imageUrl": "/candidates/candidate-03/moment-1.jpg"
       },
       {
         "time": "13:20",
         "caption": "어제 해둔 파스타 점심. 분명 2인분 분량인데 왜 또 다 먹었지",
-        "imageUrl": "https://picsum.photos/seed/cand03m2/600/400"
+        "imageUrl": "/candidates/candidate-03/moment-2.jpg"
       },
       {
         "time": "20:15",
         "caption": "마감 30분 전 헬스장 입장. 이러면 안 된다는 걸 알면서도 매번 이럼",
-        "imageUrl": "https://picsum.photos/seed/cand03m3/600/400"
+        "imageUrl": "/candidates/candidate-03/moment-3.jpg"
       },
       {
         "time": "23:50",
         "caption": "미드 한 편 보다 잠들 예정. 근데 매번 두 편 보고 새벽됨",
-        "imageUrl": "https://picsum.photos/seed/cand03m4/600/400"
+        "imageUrl": "/candidates/candidate-03/moment-4.jpg"
       }
     ]
   },
@@ -122,28 +122,28 @@
         "팟캐스트"
       ],
       "bio": "혼자 있는 시간을 좋아하는데 외롭진 않아요. 조용한 데서 생각 많이 하는 편이에요.",
-      "imageUrl": "https://randomuser.me/api/portraits/women/22.jpg"
+      "imageUrl": "/candidates/candidate-04/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "10:30",
         "caption": "도서관 개관 시간 맞춰 도착. 자리 잡는 맛에 일찍 오는 거라고 혼자 생각중",
-        "imageUrl": "https://picsum.photos/seed/cand04m1/600/400"
+        "imageUrl": "/candidates/candidate-04/moment-1.jpg"
       },
       {
         "time": "13:45",
         "caption": "샌드위치 들고 캠퍼스 벤치. 논문이랑 잠깐 거리두기 시간",
-        "imageUrl": "https://picsum.photos/seed/cand04m2/600/400"
+        "imageUrl": "/candidates/candidate-04/moment-2.jpg"
       },
       {
         "time": "17:00",
         "caption": "귀가 길에 팟캐스트 들으면서 걷기. 이게 하루 중 제일 좋은 시간임",
-        "imageUrl": "https://picsum.photos/seed/cand04m3/600/400"
+        "imageUrl": "/candidates/candidate-04/moment-3.jpg"
       },
       {
         "time": "21:30",
         "caption": "오늘도 수채화 조금. 잘 안 돼도 그냥 색깔 올리는 게 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand04m4/600/400"
+        "imageUrl": "/candidates/candidate-04/moment-4.jpg"
       }
     ]
   },
@@ -159,28 +159,28 @@
         "기타"
       ],
       "bio": "계획 짜는 걸 좋아하는데 즉흥 여행도 좋아요. 모순인 거 알아요.",
-      "imageUrl": "https://randomuser.me/api/portraits/men/33.jpg"
+      "imageUrl": "/candidates/candidate-05/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "08:10",
         "caption": "2호선 출근. 자리 앉았다가 할머니 보고 양보함. 기분이 뭔가 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand05m1/600/400"
+        "imageUrl": "/candidates/candidate-05/moment-1.jpg"
       },
       {
         "time": "12:00",
         "caption": "팀이랑 삼겹살 점심. 이런 게 직장 생활의 낙이지",
-        "imageUrl": "https://picsum.photos/seed/cand05m2/600/400"
+        "imageUrl": "/candidates/candidate-05/moment-2.jpg"
       },
       {
         "time": "19:30",
         "caption": "퇴근하자마자 잠실 야구장 직행. 우리 팀 이겼음 !!",
-        "imageUrl": "https://picsum.photos/seed/cand05m3/600/400"
+        "imageUrl": "/candidates/candidate-05/moment-3.jpg"
       },
       {
         "time": "23:00",
         "caption": "귀가하면서 치킨 앱 열었다 닫았다 결국 주문함. 후회는 내일",
-        "imageUrl": "https://picsum.photos/seed/cand05m4/600/400"
+        "imageUrl": "/candidates/candidate-05/moment-4.jpg"
       }
     ]
   },
@@ -196,28 +196,28 @@
         "시장 구경"
       ],
       "bio": "카페에서 일하는 게 집보다 집중이 잘 돼요. 낯선 소음이 오히려 편하더라고요.",
-      "imageUrl": "https://randomuser.me/api/portraits/women/34.jpg"
+      "imageUrl": "/candidates/candidate-06/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "10:00",
         "caption": "오늘 작업할 카페 고르는 데 20분. 이것도 일의 일부라고 생각하기로 함",
-        "imageUrl": "https://picsum.photos/seed/cand06m1/600/400"
+        "imageUrl": "/candidates/candidate-06/moment-1.jpg"
       },
       {
         "time": "13:10",
         "caption": "편의점 도시락 + 아아. 요즘 이게 최고의 점심임",
-        "imageUrl": "https://picsum.photos/seed/cand06m2/600/400"
+        "imageUrl": "/candidates/candidate-06/moment-2.jpg"
       },
       {
         "time": "17:45",
         "caption": "수영장 50m 레인 20바퀴. 물 속에선 아무 생각 안 해도 돼서 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand06m3/600/400"
+        "imageUrl": "/candidates/candidate-06/moment-3.jpg"
       },
       {
         "time": "20:30",
         "caption": "망원 시장 저녁 산책. 어묵 꼬치 사먹으면서 필름 사진 한 롤 다 씀",
-        "imageUrl": "https://picsum.photos/seed/cand06m4/600/400"
+        "imageUrl": "/candidates/candidate-06/moment-4.jpg"
       }
     ]
   },
@@ -233,28 +233,28 @@
         "빵 굽기"
       ],
       "bio": "애들이랑 하루 종일 있으면 지칠 것 같지만 오히려 에너지를 받아요. 주말엔 완전 다른 사람이 됩니다.",
-      "imageUrl": "https://randomuser.me/api/portraits/men/44.jpg"
+      "imageUrl": "/candidates/candidate-07/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "07:00",
         "caption": "7시에 학교 도착. 이른 거 알지만 혼자 교실 있는 시간이 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand07m1/600/400"
+        "imageUrl": "/candidates/candidate-07/moment-1.jpg"
       },
       {
         "time": "12:30",
         "caption": "급식실 당번. 애들이 맛없다 해도 제가 먹어보면 진짜 맛있음",
-        "imageUrl": "https://picsum.photos/seed/cand07m2/600/400"
+        "imageUrl": "/candidates/candidate-07/moment-2.jpg"
       },
       {
         "time": "18:00",
         "caption": "퇴근 후 클라이밍 짐. 문제 하나 풀면 성취감이 애들 칭찬 받는 것 같음",
-        "imageUrl": "https://picsum.photos/seed/cand07m3/600/400"
+        "imageUrl": "/candidates/candidate-07/moment-3.jpg"
       },
       {
         "time": "21:45",
         "caption": "주말 빵 재료 미리 주문함. 크림치즈 베이글 해볼 예정",
-        "imageUrl": "https://picsum.photos/seed/cand07m4/600/400"
+        "imageUrl": "/candidates/candidate-07/moment-4.jpg"
       }
     ]
   },
@@ -270,28 +270,28 @@
         "홈 카페"
       ],
       "bio": "유행보다 나만의 취향이 생기는 중이에요. 아직 모르는 게 많은데 그게 오히려 설레요.",
-      "imageUrl": "https://randomuser.me/api/portraits/women/45.jpg"
+      "imageUrl": "/candidates/candidate-08/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "09:15",
         "caption": "인턴 첫 달. 아직 출퇴근 시간이 낯선데 적응되면 좋아질 것 같음",
-        "imageUrl": "https://picsum.photos/seed/cand08m1/600/400"
+        "imageUrl": "/candidates/candidate-08/moment-1.jpg"
       },
       {
         "time": "13:00",
         "caption": "선배들이랑 떡볶이. 회사 근처에 이런 데가 있을 줄 몰랐음",
-        "imageUrl": "https://picsum.photos/seed/cand08m2/600/400"
+        "imageUrl": "/candidates/candidate-08/moment-2.jpg"
       },
       {
         "time": "17:30",
         "caption": "퇴근하고 DDP 전시. 혼자 와도 두 시간이 금방 감",
-        "imageUrl": "https://picsum.photos/seed/cand08m3/600/400"
+        "imageUrl": "/candidates/candidate-08/moment-3.jpg"
       },
       {
         "time": "22:00",
         "caption": "집에서 홈카페 연습. 오늘은 라떼아트 하트 성공함",
-        "imageUrl": "https://picsum.photos/seed/cand08m4/600/400"
+        "imageUrl": "/candidates/candidate-08/moment-4.jpg"
       }
     ]
   },
@@ -307,28 +307,28 @@
         "독서"
       ],
       "bio": "창업하면 워라밸이 없다던데 저는 퇴근 후에 의도적으로 완전히 끊어요. 안 그러면 번아웃이 와서요.",
-      "imageUrl": "https://randomuser.me/api/portraits/men/55.jpg"
+      "imageUrl": "/candidates/candidate-09/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "08:30",
         "caption": "팀원 없는 아침 두 시간이 집중력 제일 좋음. 중요한 결정은 이때 함",
-        "imageUrl": "https://picsum.photos/seed/cand09m1/600/400"
+        "imageUrl": "/candidates/candidate-09/moment-1.jpg"
       },
       {
         "time": "12:45",
         "caption": "혼자 걸어서 10분 거리 돈까스. 이 루틴 1년째인데 안 질림",
-        "imageUrl": "https://picsum.photos/seed/cand09m2/600/400"
+        "imageUrl": "/candidates/candidate-09/moment-2.jpg"
       },
       {
         "time": "19:00",
         "caption": "퇴근하자마자 자전거 꺼냄. 한 시간 타면 업무 생각이 진짜로 사라짐",
-        "imageUrl": "https://picsum.photos/seed/cand09m3/600/400"
+        "imageUrl": "/candidates/candidate-09/moment-3.jpg"
       },
       {
         "time": "22:30",
         "caption": "요리 유튜브 보면서 침대에 누움. 실제로 하진 않고 보기만 함",
-        "imageUrl": "https://picsum.photos/seed/cand09m4/600/400"
+        "imageUrl": "/candidates/candidate-09/moment-4.jpg"
       }
     ]
   },
@@ -344,28 +344,28 @@
         "공포영화"
       ],
       "bio": "3교대라 생활이 불규칙한데 그래서 쉬는 날에 뭘 할지 계획하는 게 더 즐거워요.",
-      "imageUrl": "https://randomuser.me/api/portraits/women/56.jpg"
+      "imageUrl": "/candidates/candidate-10/profile.jpg"
     },
     "dailyMoments": [
       {
         "time": "06:50",
         "caption": "야간 끝나고 퇴근. 이 시간 동네가 너무 조용하고 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand10m1/600/400"
+        "imageUrl": "/candidates/candidate-10/moment-1.jpg"
       },
       {
         "time": "14:00",
         "caption": "낮잠 자고 일어나서 늦은 점심. 오늘은 소고기 미역국 직접 끓임",
-        "imageUrl": "https://picsum.photos/seed/cand10m2/600/400"
+        "imageUrl": "/candidates/candidate-10/moment-2.jpg"
       },
       {
         "time": "17:30",
         "caption": "쉬는 날 드라이브. 목적지 없이 그냥 달리는 게 제일 좋음",
-        "imageUrl": "https://picsum.photos/seed/cand10m3/600/400"
+        "imageUrl": "/candidates/candidate-10/moment-3.jpg"
       },
       {
         "time": "21:00",
         "caption": "뜨개질하면서 공포영화. 손 바쁘면 덜 무서운 거 진짜임",
-        "imageUrl": "https://picsum.photos/seed/cand10m4/600/400"
+        "imageUrl": "/candidates/candidate-10/moment-4.jpg"
       }
     ]
   }

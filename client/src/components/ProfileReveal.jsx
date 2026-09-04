@@ -1,5 +1,4 @@
 import './ProfileReveal.css';
-import { BASE_URL as BASE } from '../api/client.js';
 import ConversationStarter from './ConversationStarter.jsx';
 
 export default function ProfileReveal({ reveal, sessionId, condition, onContinue }) {
