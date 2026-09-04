@@ -22,6 +22,7 @@
   --radius-lg: 20px;
   --shadow-card: 0 2px 16px rgba(0,0,0,0.07);
   --font-sans: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  --color-bg-surround: #e8e3dc;
 }
 
 html, body {
@@ -29,7 +30,7 @@ html, body {
 }
 
 body {
-  background: #e8e3dc;
+  background: var(--color-bg-surround);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   font-size: 15px;
@@ -42,7 +43,6 @@ body {
   max-width: 430px;
   margin: 0 auto;
   background: var(--color-bg);
-  position: relative;
   box-shadow: 0 0 40px rgba(0,0,0,0.12);
 }
 
