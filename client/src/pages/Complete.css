@@ -103,7 +103,7 @@
 
 .survey-option.selected {
   border-color: var(--color-accent);
-  background: #fdf3ee;
+  background: var(--color-accent-bg);
   color: var(--color-accent);
   font-weight: 500;
 }
