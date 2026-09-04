@@ -1,81 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap');
+
+/* ── Outer shell ── */
 .landing {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: 0 24px;
 }
 
-.landing-content {
+/* ── Visual hero ── */
+.landing-visual {
+  height: 44dvh;
+  min-height: 220px;
+  flex-shrink: 0;
+  background: #ede8e0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 20px 20px;
+  gap: 10px;
+}
+
+/* Subtle vignette at bottom so strips fade into body */
+.landing-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 55%,
+    #ede8e0 100%
+  );
+  pointer-events: none;
+}
+
+/* Three moment strips — morning / afternoon / evening */
+.moment-strip {
+  flex: 1;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.13);
+}
+
+.moment-strip:nth-child(1) {
+  height: 116px;
+  transform: translateY(10px);
+  background: linear-gradient(165deg, #c8d4bc 0%, #849e78 100%);
+}
+.moment-strip:nth-child(2) {
+  height: 148px;
+  transform: translateY(0px);
+  z-index: 2;
+  background: linear-gradient(165deg, #ddc9a7 0%, #b8905a 100%);
+}
+.moment-strip:nth-child(3) {
+  height: 108px;
+  transform: translateY(14px);
+  background: linear-gradient(165deg, #a2b3cc 0%, #57708e 100%);
+}
+
+.moment-strip-label {
+  position: absolute;
+  bottom: 10px;
+  left: 11px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.80);
+}
+
+/* ── Body ── */
+.landing-body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  text-align: center;
-  padding: 48px 0 24px;
-}
-
-.landing-footer {
-  width: 100%;
-  text-align: center;
-  padding: 0 0 calc(40px + env(safe-area-inset-bottom, 0px));
+  padding: 28px 28px calc(36px + env(safe-area-inset-bottom, 0px));
 }
 
 .landing-eyebrow {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .landing-title {
-  font-size: clamp(24px, 5vw, 32px);
+  font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', Georgia, serif;
+  font-size: clamp(22px, 5.5vw, 28px);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.45;
   color: var(--color-text-primary);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   word-break: keep-all;
+  text-wrap: balance;
 }
 
 .landing-desc {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: 36px;
+  line-height: 1.75;
   word-break: keep-all;
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 36px;
-  background: var(--color-accent);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 100px;
-  transition: background 0.15s;
-}
-
-.btn-primary:hover {
-  background: var(--color-accent-hover);
+/* ── CTA ── */
+.landing-cta-wrap {
+  margin-top: auto;
+  padding-top: 28px;
 }
 
 .landing-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 280px;
+  padding: 15px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.landing-cta:hover {
+  background: var(--color-accent-hover);
+}
+
+.landing-cta:active {
+  transform: scale(0.98);
 }
 
 .landing-cta:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+  transform: none;
 }
 
 .landing-error {
-  margin-top: 16px;
+  margin-top: 12px;
   font-size: 13px;
   color: var(--color-error);
+  text-align: center;
+}
+
+/* ── Dark mode ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .landing-visual {
+    background: #2a2520;
+  }
+  :root:not([data-theme="light"]) .landing-visual::after {
+    background: linear-gradient(to bottom, transparent 55%, #2a2520 100%);
+  }
+}
+:root[data-theme="dark"] .landing-visual {
+  background: #2a2520;
+}
+:root[data-theme="dark"] .landing-visual::after {
+  background: linear-gradient(to bottom, transparent 55%, #2a2520 100%);
 }

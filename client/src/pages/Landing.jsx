@@ -43,26 +43,39 @@ export default function Landing() {
 
   return (
     <main className="landing">
-      <div className="landing-content">
+      <div className="landing-visual" aria-hidden="true">
+        <div className="moment-strip">
+          <span className="moment-strip-label">07:30</span>
+        </div>
+        <div className="moment-strip">
+          <span className="moment-strip-label">12:15</span>
+        </div>
+        <div className="moment-strip">
+          <span className="moment-strip-label">22:00</span>
+        </div>
+      </div>
+
+      <div className="landing-body">
         <p className="landing-eyebrow">만남 전 하루 엿보기</p>
         <h1 className="landing-title">
           만나기 전에,<br />
           하루를 조금 알아보고 싶다면
         </h1>
         <p className="landing-desc">
-          몇 명의 후보를 보고 더 알아보고 싶은 사람을 선택해주세요.<br />
+          몇 명의 후보를 보고 더 알아보고 싶은 사람을 선택해주세요.
           약 2~3분 소요됩니다.
         </p>
-      </div>
-      <div className="landing-footer">
-        <button
-          className="btn-primary landing-cta"
-          onClick={handleStart}
-          disabled={loading}
-        >
-          {loading ? '연결 중…' : '시작하기'}
-        </button>
-        {error && <p className="landing-error">{error}</p>}
+
+        <div className="landing-cta-wrap">
+          <button
+            className="landing-cta"
+            onClick={handleStart}
+            disabled={loading}
+          >
+            {loading ? '연결 중…' : '시작하기'}
+          </button>
+          {error && <p className="landing-error">{error}</p>}
+        </div>
       </div>
     </main>
   );
