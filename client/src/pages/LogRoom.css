@@ -1,0 +1,252 @@
+.log-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+
+.log-page .experiment-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
+
+.log-page .spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  background: rgba(245, 245, 247, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+.log-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-btn-secondary);
+  font-size: 16px;
+}
+
+.log-header-name {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.log-header-sub {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.log-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 16px;
+}
+
+.log-split-col {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111118;
+  aspect-ratio: 3 / 4;
+}
+
+.log-split-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 3px 7px;
+  border-radius: 100px;
+}
+
+.log-split-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.log-split-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+}
+
+.log-split-caption {
+  padding: 10px 18px 4px;
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+  word-break: keep-all;
+  line-height: 1.5;
+}
+
+.log-timeline {
+  list-style: none;
+  padding: 12px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.log-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 86%;
+}
+
+.log-entry-me {
+  margin-left: auto;
+  align-items: flex-end;
+}
+
+.log-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.log-entry-img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--color-border);
+}
+
+.log-entry-caption {
+  font-size: 13.5px;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.log-reactions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.log-chip,
+.log-preset,
+.log-starter {
+  border-radius: 100px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--color-btn-secondary);
+  color: var(--color-text-secondary);
+}
+
+.log-chip.on {
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+}
+
+.log-thread,
+.log-starters,
+.log-composer {
+  padding: 8px 16px 4px;
+}
+
+.log-thread-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.log-bubble {
+  max-width: 82%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  word-break: keep-all;
+  margin-bottom: 8px;
+}
+
+.log-bubble-me {
+  margin-left: auto;
+  background: var(--color-accent);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.log-bubble-them {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-bottom-left-radius: 4px;
+}
+
+.log-starter {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  background: #fff;
+  border: 1px solid var(--color-border);
+}
+
+.log-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.log-preset {
+  height: 40px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.log-footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 16px 16px 8px;
+}
+
+.log-footer-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+}

@@ -70,6 +70,18 @@ export const getCandidate = (id, sessionId) =>
 export const revealProfile = (id, sessionId) =>
   request(`/api/candidates/${id}/reveal?sessionId=${sessionId}`).then(withLocalImages);
 
+export async function getFullCandidate(id, sessionId) {
+  try {
+    return withLocalImages(await request(`/api/candidates/${id}/full?sessionId=${sessionId}`));
+  } catch {
+    try {
+      return withLocalImages(await request(`/api/candidates/${id}/reveal?sessionId=${sessionId}`));
+    } catch {
+      return withLocalImages(await request(`/api/candidates/${id}?sessionId=${sessionId}`));
+    }
+  }
+}
+
 export const postEvent = (payload) =>
   request('/api/events', { method: 'POST', body: JSON.stringify(payload) });
 

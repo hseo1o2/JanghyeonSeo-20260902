@@ -202,3 +202,13 @@
 .reveal-footer .btn-primary {
   width: 100%;
 }
+
+.reveal-secondary {
+  width: 100%;
+  margin-top: 8px;
+  height: 44px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13.5px;
+  font-weight: 600;
+}

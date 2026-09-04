@@ -44,7 +44,33 @@ router.get('/:id/reveal', async (req, res) => {
   }
 
   const highlightMoments = candidate.dailyMoments.slice(-2).map(m => ({ time: m.time, caption: m.caption }));
-  return res.json({ id: candidate.id, profile: candidate.profile, highlightMoments });
+  return res.json({
+    id: candidate.id,
+    profile: candidate.profile,
+    highlightMoments,
+    dailyMoments: candidate.dailyMoments,
+  });
+});
+
+router.get('/:id/full', async (req, res) => {
+  const candidate = candidates.find(c => c.id === req.params.id);
+  if (!candidate) return res.status(404).json({ error: 'Candidate not found' });
+
+  const { sessionId } = req.query;
+  if (!sessionId) return res.status(400).json({ error: 'sessionId is required' });
+
+  const { data: session, error } = await db.from('sessions').select('condition').eq('id', sessionId).maybeSingle();
+  if (error) {
+    console.error('[candidates/full] session lookup failed:', error.message);
+    return res.status(500).json({ error: 'Database error' });
+  }
+  if (!session) return res.status(400).json({ error: 'Unknown sessionId' });
+
+  return res.json({
+    id: candidate.id,
+    profile: candidate.profile,
+    dailyMoments: candidate.dailyMoments,
+  });
 });
 
 export default router;

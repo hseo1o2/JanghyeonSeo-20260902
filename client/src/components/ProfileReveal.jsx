@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './ProfileReveal.css';
 import ConversationStarter from './ConversationStarter.jsx';
 
-export default function ProfileReveal({ reveal, sessionId, condition, onContinue }) {
+export default function ProfileReveal({ reveal, sessionId, condition, onContinue, onOpenLog }) {
   const { profile, highlightMoments } = reveal;
   const [phase, setPhase] = useState('match');
 
@@ -25,7 +25,7 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
           />
         </div>
         <p className="match-name">{profile.name} · {profile.age}세</p>
-        <p className="match-hint">탭하면 프로필과 대화 주제를 볼 수 있어요</p>
+        <p className="match-hint">탭하면 오늘 로그를 같이 열 수 있어요</p>
       </div>
     );
   }
@@ -80,8 +80,11 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
         </div>
 
         <footer className="reveal-footer">
-          <button className="btn-primary" onClick={onContinue}>
-            다음 사람 보기
+          <button className="btn-primary" onClick={onOpenLog}>
+            오늘 로그 시작하기
+          </button>
+          <button className="reveal-secondary" onClick={onContinue}>
+            다른 사람 더 보기
           </button>
         </footer>
       </div>

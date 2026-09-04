@@ -253,8 +253,6 @@
   padding: 14px 18px calc(18px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--color-border);
   margin-top: auto;
-  position: sticky;
-  bottom: 0;
   background: var(--color-surface);
   z-index: 5;
 }

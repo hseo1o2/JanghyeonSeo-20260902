@@ -19,7 +19,7 @@ export default function Landing() {
       const index = parseInt(localStorage.getItem('candidateIndex') || '0', 10);
       const ids   = JSON.parse(localStorage.getItem('candidateIds') || '[]');
       if (sid && index < ids.length) {
-        navigate('/experiment', { replace: true });
+        navigate('/discover', { replace: true });
         return;
       }
     } catch {
@@ -48,7 +48,7 @@ export default function Landing() {
       if (firstCandidate) {
         localStorage.setItem('firstCandidate', JSON.stringify(firstCandidate));
       }
-      navigate('/experiment');
+      navigate('/discover');
     } catch {
       setError('서버 연결에 실패했어요. 잠시 후 다시 시도해주세요.');
     } finally {
@@ -94,8 +94,7 @@ export default function Landing() {
           하루를 조금 알아보고 싶다면
         </h1>
         <p className="landing-desc">
-          몇 명의 후보를 보고, 더 알아보고 싶은 사람을 골라 주세요.
-          약 2~3분 소요됩니다.
+          하루 장면을 먼저 보고, 궁금한 사람과 오늘 로그를 같이 쌓아보세요.
         </p>
 
         <div className="landing-how">

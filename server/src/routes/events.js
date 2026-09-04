@@ -7,6 +7,8 @@ const VALID_EVENTS = new Set([
   'candidate_interested',
   'profile_revealed',
   'conversation_intent_clicked',
+  'log_posted',
+  'log_reacted',
 ]);
 
 const router = Router();

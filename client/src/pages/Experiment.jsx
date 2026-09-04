@@ -1,10 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCandidate, postEvent, revealProfile } from '../api/client.js';
+import { getCandidate, getFullCandidate, postEvent } from '../api/client.js';
 import ProfileCard from '../components/ProfileCard.jsx';
 import DailyLifeCard from '../components/DailyLifeCard.jsx';
 import ProfileReveal from '../components/ProfileReveal.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
+import TabBar from '../components/TabBar.jsx';
+import { upsertMatch } from '../lib/matches.js';
 import './Experiment.css';
 
 function readSession() {
@@ -41,7 +43,7 @@ export default function Experiment() {
 
   const loadCandidate = useCallback(async (index) => {
     if (index >= candidateIds.length) {
-      navigate('/complete');
+      navigate('/matches');
       return;
     }
     setLoading(true);
@@ -125,9 +127,8 @@ export default function Experiment() {
     }).catch(() => {});
 
     try {
-      let data = null;
+      const data = await getFullCandidate(candidate.id, sessionId);
       if (condition === 'daily_first') {
-        data = await revealProfile(candidate.id, sessionId);
         postEvent({
           sessionId, condition,
           candidateId: candidate.id,
@@ -135,18 +136,38 @@ export default function Experiment() {
           elapsedMs: Date.now() - clickedAt,
           timestamp: new Date().toISOString(),
         }).catch(() => {});
-      } else {
-        const folder = candidate.id.replace('candidate_', 'candidate-');
-        data = {
-          id: candidate.id,
-          profile: {
-            ...candidate.profile,
-            imageUrl: `/candidates/${folder}/profile.jpg`,
-          },
-          highlightMoments: [],
-        };
       }
-      setRevealData(data);
+      const folder = candidate.id.replace('candidate_', 'candidate-');
+      const profile = data.profile || candidate.profile;
+      const moments = data.dailyMoments || candidate.dailyMoments || [];
+      upsertMatch({
+        id: candidate.id,
+        name: profile.name,
+        age: profile.age,
+        occupation: profile.occupation,
+        bio: profile.bio,
+        hobbies: profile.hobbies,
+        imageUrl: `/candidates/${folder}/profile.jpg`,
+        theirMoments: moments.map((m, i) => ({
+          id: `${candidate.id}-m${i}`,
+          time: m.time,
+          caption: m.caption,
+          imageUrl: m.imageUrl || `/candidates/${folder}/moment-${i + 1}.jpg`,
+          reactions: [],
+        })),
+      });
+      setRevealData({
+        id: candidate.id,
+        profile: {
+          ...profile,
+          imageUrl: `/candidates/${folder}/profile.jpg`,
+        },
+        dailyMoments: moments,
+        highlightMoments: moments.slice(-2).map(m => ({
+          time: m.time,
+          caption: m.caption,
+        })),
+      });
     } catch {
       nextCandidate();
     }
@@ -156,6 +177,11 @@ export default function Experiment() {
   function handleRevealContinue() {
     setRevealData(null);
     nextCandidate();
+  }
+
+  function handleOpenLog() {
+    if (!revealData?.id) return;
+    navigate(`/log/${revealData.id}`);
   }
 
   if (!sessionId) return null;
@@ -168,6 +194,7 @@ export default function Experiment() {
           sessionId={sessionId}
           condition={condition}
           onContinue={handleRevealContinue}
+          onOpenLog={handleOpenLog}
         />
       )}
       <ProgressBar current={currentIndex + 1} total={candidateIds.length} />
@@ -206,6 +233,7 @@ export default function Experiment() {
           )}
         </div>
       )}
+      <TabBar />
     </main>
   );
 }
