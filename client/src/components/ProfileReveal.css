@@ -18,7 +18,7 @@
   background: var(--color-bg);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   width: 100%;
-  max-width: 480px;
+  max-width: 430px;
   max-height: 90dvh;
   overflow-y: auto;
   display: flex;
