@@ -5,24 +5,26 @@
 }
 
 :root {
-  --color-bg: #fafaf9;
-  --color-surface: #ffffff;
-  --color-border: #e8e4de;
-  --color-text-primary: #1a1a18;
-  --color-text-secondary: #6b6762;
-  --color-text-muted: #a09c97;
-  --color-accent: #d4622a;
-  --color-accent-hover: #b8531f;
-  --color-accent-bg: #fdf3ee;
-  --color-error: #c0392b;
-  --color-btn-secondary: #f0ede8;
-  --color-btn-secondary-hover: #e5e1db;
+  --color-bg: #F5F5F7;
+  --color-surface: #FFFFFF;
+  --color-border: #E0E0E6;
+  --color-text-primary: #111118;
+  --color-text-secondary: #63637A;
+  --color-text-muted: #A0A0B5;
+  --color-accent: #4F46E5;
+  --color-accent-hover: #4338CA;
+  --color-accent-bg: #EEF2FF;
+  --color-error: #EF4444;
+  --color-btn-secondary: #EBEBF2;
+  --color-btn-secondary-hover: #DDDDE8;
+  --color-swipe-left: #EF4444;
+  --color-swipe-right: #22C55E;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --shadow-card: 0 2px 16px rgba(0,0,0,0.07);
+  --shadow-card: 0 2px 24px rgba(30, 30, 60, 0.09);
   --font-sans: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-  --color-bg-surround: #e8e3dc;
+  --color-bg-surround: #D0D0DC;
 }
 
 html, body {
@@ -43,7 +45,7 @@ body {
   max-width: 430px;
   margin: 0 auto;
   background: var(--color-bg);
-  box-shadow: 0 0 40px rgba(0,0,0,0.12);
+  box-shadow: 0 0 60px rgba(30, 30, 60, 0.14);
 }
 
 button {

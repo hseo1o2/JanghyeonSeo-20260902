@@ -1,3 +1,48 @@
+/* ── Swipe wrapper ── */
+.swipe-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  will-change: transform;
+  touch-action: none;
+  user-select: none;
+}
+
+.swipe-badge {
+  position: absolute;
+  top: 18px;
+  z-index: 10;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border-width: 2.5px;
+  border-style: solid;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.1s;
+  pointer-events: none;
+}
+
+.swipe-badge-left {
+  left: 16px;
+  color: var(--color-swipe-left);
+  border-color: var(--color-swipe-left);
+  transform: rotate(-10deg);
+}
+
+.swipe-badge-right {
+  right: 16px;
+  color: var(--color-swipe-right);
+  border-color: var(--color-swipe-right);
+  transform: rotate(10deg);
+}
+
+[data-dir="left"] .swipe-badge-left  { opacity: 1; }
+[data-dir="right"] .swipe-badge-right { opacity: 1; }
+
+/* ── Card ── */
 .candidate-card {
   background: var(--color-surface);
   border-radius: var(--radius-lg);

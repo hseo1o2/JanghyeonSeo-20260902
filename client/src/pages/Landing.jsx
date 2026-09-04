@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { startExperiment } from '../api/client.js';
+import { startExperiment, BASE_URL } from '../api/client.js';
 import './Landing.css';
 
 export default function Landing() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState(null);
+  const [slowHint, setSlowHint] = useState(false);
+  const [error, setError] = useState(null);
+  const slowTimer = useRef(null);
 
-  // Resume existing session instead of re-rolling
+  // Resume existing session if in progress
   useEffect(() => {
     try {
       const sid   = localStorage.getItem('sessionId');
@@ -18,15 +20,23 @@ export default function Landing() {
         navigate('/experiment', { replace: true });
       }
     } catch {
-      // malformed localStorage — ignore and let user start fresh
+      // malformed localStorage — ignore
     }
   }, [navigate]);
 
+  // Warm-up ping: wake Render before the user clicks
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/health`).catch(() => {});
+  }, []);
+
   async function handleStart() {
     setLoading(true);
+    setSlowHint(false);
     setError(null);
+
+    slowTimer.current = setTimeout(() => setSlowHint(true), 5000);
+
     try {
-      // ?condition=daily_first or ?condition=profile_first forces a specific condition (demo용)
       const forced = new URLSearchParams(window.location.search).get('condition');
       const { sessionId, condition, candidateIds } = await startExperiment(forced || undefined);
       localStorage.setItem('sessionId', sessionId);
@@ -37,7 +47,9 @@ export default function Landing() {
     } catch {
       setError('서버 연결에 실패했어요. 잠시 후 다시 시도해주세요.');
     } finally {
+      clearTimeout(slowTimer.current);
       setLoading(false);
+      setSlowHint(false);
     }
   }
 
@@ -62,9 +74,26 @@ export default function Landing() {
           하루를 조금 알아보고 싶다면
         </h1>
         <p className="landing-desc">
-          몇 명의 후보를 보고 더 알아보고 싶은 사람을 선택해주세요.
-          약 2~3분 소요됩니다.
+          6명의 후보를 카드로 만나보세요. 스와이프하거나 버튼으로
+          관심 여부를 선택하면, 프로필을 공개해드려요. 약 2~3분 소요됩니다.
         </p>
+
+        <div className="landing-how">
+          <div className="landing-step">
+            <span className="landing-step-icon">🃏</span>
+            <span>카드 보기</span>
+          </div>
+          <span className="landing-step-arrow">→</span>
+          <div className="landing-step">
+            <span className="landing-step-icon">👉</span>
+            <span>스와이프</span>
+          </div>
+          <span className="landing-step-arrow">→</span>
+          <div className="landing-step">
+            <span className="landing-step-icon">✨</span>
+            <span>프로필 공개</span>
+          </div>
+        </div>
 
         <div className="landing-cta-wrap">
           <button
@@ -74,6 +103,11 @@ export default function Landing() {
           >
             {loading ? '연결 중…' : '시작하기'}
           </button>
+          {loading && slowHint && (
+            <p className="landing-slow-hint">
+              서버를 깨우는 중이에요. 잠시만 기다려주세요 (최대 1분)
+            </p>
+          )}
           {error && <p className="landing-error">{error}</p>}
         </div>
       </div>
