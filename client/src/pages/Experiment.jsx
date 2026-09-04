@@ -124,10 +124,10 @@ export default function Experiment() {
       timestamp: new Date(clickedAt).toISOString(),
     }).catch(() => {});
 
-    if (condition === 'daily_first') {
-      try {
-        const data = await revealProfile(candidate.id, sessionId);
-        // elapsedMs = time from interest click to reveal data ready (network latency)
+    try {
+      let data = null;
+      if (condition === 'daily_first') {
+        data = await revealProfile(candidate.id, sessionId);
         postEvent({
           sessionId, condition,
           candidateId: candidate.id,
@@ -135,11 +135,19 @@ export default function Experiment() {
           elapsedMs: Date.now() - clickedAt,
           timestamp: new Date().toISOString(),
         }).catch(() => {});
-        setRevealData(data);
-      } catch {
-        nextCandidate();
+      } else {
+        const folder = candidate.id.replace('candidate_', 'candidate-');
+        data = {
+          id: candidate.id,
+          profile: {
+            ...candidate.profile,
+            imageUrl: `/candidates/${folder}/profile.jpg`,
+          },
+          highlightMoments: [],
+        };
       }
-    } else {
+      setRevealData(data);
+    } catch {
       nextCandidate();
     }
     setInterestPending(false);
@@ -179,7 +187,7 @@ export default function Experiment() {
         </div>
       )}
 
-      {!loading && !error && candidate && (
+      {!revealData && !loading && !error && candidate && (
         <div className={`card-wrap ${cardVisible ? 'card-visible' : ''}`}>
           {condition === 'daily_first' ? (
             <DailyLifeCard

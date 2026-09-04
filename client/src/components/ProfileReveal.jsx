@@ -1,14 +1,40 @@
+import { useEffect, useState } from 'react';
 import './ProfileReveal.css';
 import ConversationStarter from './ConversationStarter.jsx';
 
 export default function ProfileReveal({ reveal, sessionId, condition, onContinue }) {
   const { profile, highlightMoments } = reveal;
+  const [phase, setPhase] = useState('match');
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setPhase('detail'), 1600);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  if (phase === 'match') {
+    return (
+      <div className="match-overlay" onClick={() => setPhase('detail')}>
+        <p className="match-kicker">It's a match</p>
+        <h2 className="match-title">매칭되었어요</h2>
+        <div className="match-photo-wrap">
+          <img
+            src={profile.imageUrl}
+            alt=""
+            className="match-photo"
+            onError={e => { e.target.style.display = 'none'; }}
+          />
+        </div>
+        <p className="match-name">{profile.name} · {profile.age}세</p>
+        <p className="match-hint">탭하면 프로필과 대화 주제를 볼 수 있어요</p>
+      </div>
+    );
+  }
 
   return (
     <div className="reveal-overlay">
       <div className="reveal-sheet">
         <div className="reveal-handle" />
-        <p className="reveal-badge">프로필 공개</p>
+        <p className="reveal-badge">매칭 · 프로필</p>
 
         <div className="reveal-image-wrap">
           <img
@@ -55,7 +81,7 @@ export default function ProfileReveal({ reveal, sessionId, condition, onContinue
 
         <footer className="reveal-footer">
           <button className="btn-primary" onClick={onContinue}>
-            다음 후보 보기
+            다음 사람 보기
           </button>
         </footer>
       </div>
